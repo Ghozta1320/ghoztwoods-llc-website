@@ -1,0 +1,57 @@
+{
+    "target": "146.70.202.2",
+    "timestamp": "20250407_133230",
+    "findings": {
+        "timestamp": "2025-04-07 13:32:11",
+        "target": "146.70.202.2",
+        "findings": {
+            "ips": [
+                {
+                    "ip": "146.70.202.2",
+                    "threats": [],
+                    "geolocation": {
+                        "status": "success",
+                        "country": "United States",
+                        "countryCode": "US",
+                        "region": "NY",
+                        "regionName": "New York",
+                        "city": "New York",
+                        "zip": "10013",
+                        "lat": 40.7218,
+                        "lon": -74.0094,
+                        "timezone": "America/New_York",
+                        "isp": "M247 Europe SRL",
+                        "org": "M247 Ltd New York",
+                        "as": "AS9009 M247 Europe SRL",
+                        "query": "146.70.202.2"
+                    }
+                }
+            ],
+            "domains": [
+                {
+                    "domain": "146.70.202.2",
+                    "threats": [],
+                    "whois": {
+                        "registrar": null,
+                        "creation_date": "None",
+                        "expiration_date": "None"
+                    }
+                }
+            ]
+        },
+        "analysis": {
+            "risk_level": "low",
+            "threats_found": 0,
+            "data_sources": {
+                "online": [],
+                "offline": [
+                    "local_threat_db"
+                ]
+            },
+            "risk_score": 0,
+            "recommendations": [
+                "Maintain current security measures"
+            ]
+        }
+    }
+}

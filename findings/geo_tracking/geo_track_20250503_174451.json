@@ -1,0 +1,21 @@
+{
+    "target": "192.168.0.2\n",
+    "timestamp": "20250503_174451",
+    "locations": {
+        "timestamp": "2025-05-03 17:44:50",
+        "identifier": "192.168.0.2\n",
+        "locations": {
+            "ip": {
+                "error": "All geolocation services failed",
+                "details": []
+            }
+        },
+        "data_sources": {
+            "online": [],
+            "offline": [
+                "local_database"
+            ]
+        },
+        "saved_to": "findings\\geo_tracking\\track_20250503_174451.json"
+    }
+}

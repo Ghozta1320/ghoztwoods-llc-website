@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-04-07 12:59:44",
+  "identifier": "2.18.48.207",
+  "locations": {
+    "ip": {
+      "source": "ip-api.com",
+      "coordinates": [
+        39.0438,
+        -77.4874
+      ],
+      "city": "Ashburn",
+      "region": "Virginia",
+      "country": "United States",
+      "isp": "Akamai International B.V",
+      "org": "Akamai Technologies",
+      "as": "AS33905 Akamai International B.V.",
+      "last_updated": "2025-04-07 12:59:46"
+    }
+  },
+  "data_sources": {
+    "online": [],
+    "offline": [
+      "local_database"
+    ]
+  },
+  "map_path": "findings\\geo_tracking\\map_20250407_125946.html"
+}

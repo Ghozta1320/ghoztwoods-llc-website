@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report a Scam - Scam Prevention & Protection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="scam-types.html">Common Scams</a></li>
+            <li><a href="resources.html">Help Resources</a></li>
+            <li><a href="report.html">Report a Scam</a></li>
+            <li><a href="about.html">About Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Report a Scam</h1>
+        
+        <div class="urgent-notice">
+            <p><strong>If you're in immediate danger or have just sent money to a scammer, call our emergency hotline: 1-800-XXX-XXXX</strong></p>
+        </div>
+
+        <form class="report-form" action="#" method="POST">
+            <div class="form-section">
+                <h2>Your Information</h2>
+                <div class="form-group">
+                    <label for="name">Name (Optional):</label>
+                    <input type="text" id="name" name="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="contact">Contact Information (Email or Phone):</label>
+                    <input type="text" id="contact" name="contact" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Your Location (City, State):</label>
+                    <input type="text" id="location" name="location" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Scam Details</h2>
+                <div class="form-group">
+                    <label for="scam-type">Type of Scam:</label>
+                    <select id="scam-type" name="scam-type" required>
+                        <option value="">Select a type...</option>
+                        <option value="crypto">Cryptocurrency Scam</option>
+                        <option value="government">Government Impersonation</option>
+                        <option value="romance">Romance Scam</option>
+                        <option value="tech">Tech Support Scam</option>
+                        <option value="investment">Investment Fraud</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">When did this occur?</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount">Amount Lost (if applicable):</label>
+                    <input type="number" id="amount" name="amount" placeholder="Enter amount in USD">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Detailed Description:</label>
+                    <textarea id="description" name="description" rows="5" required 
+                        placeholder="Please provide as much detail as possible about the scam, including any websites, phone numbers, or email addresses used."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="evidence">Evidence Upload (optional):</label>
+                    <input type="file" id="evidence" name="evidence" multiple>
+                    <small>You can upload screenshots, emails, or other relevant documents</small>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Additional Information</h2>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="law-enforcement" value="yes">
+                        I have already reported this to law enforcement
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="contact-permission" value="yes" required>
+                        I give permission to be contacted about this report
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">Submit Report</button>
+        </form>
+
+        <div class="privacy-notice">
+            <h3>Privacy Notice</h3>
+            <p>Your information will be kept confidential and only shared with relevant investigation teams. We take your privacy seriously and will not share your personal information without your consent.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Scam Prevention Initiative. Created by Avery Delpit in partnership with Ghoztwoods LLC</p>
+    </footer>
+</body>
+</html>

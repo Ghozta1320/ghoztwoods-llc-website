@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scam Prevention & Protection</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="scam-types.html">Common Scams</a></li>
+            <li><a href="resources.html">Help Resources</a></li>
+            <li><a href="report.html">Report a Scam</a></li>
+            <li><a href="about.html">About Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="content-grid">
+            <!-- Left Column: Info Section -->
+            <div class="info-section">
+                <h1>Protecting Our Community from Scams</h1>
+                <div class="alert-box">
+                    <h2>2025 Scam Alert</h2>
+                    <p>Stay informed about the latest scams targeting our community.</p>
+                </div>
+
+                <div class="video-section">
+                    <h2>Watch: How to Spot and Avoid Scams</h2>
+                    <div class="video-container">
+                        <iframe width="560" height="315" 
+                            src="https://www.youtube.com/embed/6nfGwSw-I14" 
+                            title="Scammer Payback Answers Scam Questions | Tech Support | WIRED" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Chatbot -->
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h2>S.O.G - Scammer Operations Group</h2>
+                    <p>Tactical Anti-Scam Intelligence System</p>
+                </div>
+                <div class="chat-messages" id="chat-messages"></div>
+                <div class="tools-panel">
+                    <button class="tool-button" onclick="activateTool('phone')">📱 Phone Lookup</button>
+                    <button class="tool-button" onclick="activateTool('email')">📧 Email Trace</button>
+                    <button class="tool-button" onclick="activateTool('domain')">🌐 Domain Check</button>
+                    <button class="tool-button" onclick="activateTool('crypto')">💰 Crypto Scan</button>
+                    <button class="tool-button" onclick="activateTool('report')">🚨 Report</button>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Enter your message or paste suspicious content...">
+                    <button id="send-button">Send</button>
+                </div>
+                <div class="status-bar">
+                    System Status: ACTIVE | Database: CONNECTED | Threat Level: MONITORING
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        // OSINT Database Links
+        const OSINT_LINKS = {
+            phone: {
+                truecaller: 'https://www.truecaller.com/search/',
+                ftc: 'https://www.ftc.gov/complaint',
+                donotcall: 'https://www.donotcall.gov/report.html',
+                sync: 'https://sync.me/search/',
+                phoneinfoga: 'https://demo.phoneinfoga.crvx.fr/#/',
+                callerSmart: 'https://www.callersmart.com/identify/',
+                whitepages: 'https://www.whitepages.com/phone/',
+                spokeo: 'https://www.spokeo.com/search?q=',
+                peoplefinder: 'https://www.peoplefinder.com/reverse-phone-lookup/'
+            },
+            email: {
+                haveibeenpwned: 'https://haveibeenpwned.com/account/',
+                emailrep: 'https://emailrep.io/',
+                hunter: 'https://hunter.io/verify/',
+                epieos: 'https://epieos.com/?q=',
+                intelx: 'https://intelx.io/?s=',
+                dehashed: 'https://dehashed.com/search?query=',
+                emailformat: 'https://email-format.com/d/',
+                snov: 'https://snov.io/email-finder',
+                emailverifier: 'https://emailverifier.com/',
+                holehe: 'https://github.com/megadose/holehe'
+            },
+            domain: {
+                urlscan: 'https://urlscan.io/domain/',
+                virustotal: 'https://www.virustotal.com/gui/domain/',
+                whois: 'https://www.whois.com/whois/',
+                securitytrails: 'https://securitytrails.com/domain/',
+                censys: 'https://search.censys.io/domain?q=',
+                shodan: 'https://www.shodan.io/search?query=',
+                spyonweb: 'https://spyonweb.com/',
+                dnsdumpster: 'https://dnsdumpster.com/',
+                threatcrowd: 'https://threatcrowd.org/domain.php?domain=',
+                waybackmachine: 'https://web.archive.org/web/*/'
+            },
+            crypto: {
+                blockchain: 'https://www.blockchain.com/explorer/addresses/',
+                etherscan: 'https://etherscan.io/address/',
+                bitcoinabuse: 'https://www.bitcoinabuse.com/reports/',
+                blockchair: 'https://blockchair.com/bitcoin/address/',
+                walletexplorer: 'https://www.walletexplorer.com/',
+                bitcoinwhoswho: 'https://bitcoinwhoswho.com/address/',
+                ethplorer: 'https://ethplorer.io/address/',
+                bloxy: 'https://bloxy.info/address/',
+                tokenview: 'https://tokenview.com/en/address/',
+                breadcrumbs: 'https://breadcrumbs.app/'
+            }
+        };
+
+        // Bot response patterns
+        const botPatterns = {
+            greeting: {
+                patterns: ['hello', 'hi', 'hey', 'greetings'],
+                response: 'S.O.G TACTICAL SYSTEM ONLINE\n\nAccessing threat database...\nEstablishing secure connection...\nInitializing OSINT modules...\n\nAwaiting your security query.'
+            },
+            phone_analysis: {
+                patterns: ['phone', 'call', 'caller', 'telephone'],
+                handler: (input) => {
+                    const phone = extractPhoneNumber(input);
+                    if (!phone) return '📱 PHONE INTELLIGENCE MODULE:\n\nProvide a phone number for investigation.';
+                    
+                return `📱 PHONE INTELLIGENCE REPORT:\n\n` +
+                       `Phone: ${phone}\n` +
+                       `---------------\n` +
+                       `🔍 BASIC LOOKUP:\n` +
+                       `1. Truecaller Search:\n${OSINT_LINKS.phone.truecaller}${phone}\n` +
+                       `2. Sync.me Database:\n${OSINT_LINKS.phone.sync}${phone}\n` +
+                       `3. WhitePages Lookup:\n${OSINT_LINKS.phone.whitepages}${phone}\n\n` +
+                       `🕵️ DEEP SEARCH:\n` +
+                       `4. Spokeo Analysis:\n${OSINT_LINKS.phone.spokeo}${phone}\n` +
+                       `5. PeopleFinder Data:\n${OSINT_LINKS.phone.peoplefinder}${phone}\n` +
+                       `6. CallerSmart Intel:\n${OSINT_LINKS.phone.callerSmart}${phone}\n\n` +
+                       `🚨 REPORT SUSPICIOUS ACTIVITY:\n` +
+                       `7. FTC Complaint Center:\n${OSINT_LINKS.phone.ftc}\n` +
+                       `8. Do Not Call Registry:\n${OSINT_LINKS.phone.donotcall}\n\n` +
+                       `⚡ ADVANCED TOOLS:\n` +
+                       `9. PhoneInfoga Scanner:\n${OSINT_LINKS.phone.phoneinfoga}`;
+                }
+            },
+            email_trace: {
+                patterns: ['email', 'mail', 'gmail', 'phishing'],
+                handler: (input) => {
+                    const email = extractEmail(input);
+                    if (!email) return '📧 EMAIL FORENSICS MODULE:\n\nProvide an email address for investigation.';
+                    
+                return `📧 EMAIL INTELLIGENCE REPORT:\n\n` +
+                       `Email: ${email}\n` +
+                       `---------------\n` +
+                       `🔍 BREACH CHECK:\n` +
+                       `1. HaveIBeenPwned Database:\n${OSINT_LINKS.email.haveibeenpwned}${email}\n` +
+                       `2. DeHashed Records:\n${OSINT_LINKS.email.dehashed}${email}\n\n` +
+                       `🕵️ REPUTATION ANALYSIS:\n` +
+                       `3. EmailRep Score:\n${OSINT_LINKS.email.emailrep}${email}\n` +
+                       `4. Email Format Check:\n${OSINT_LINKS.email.emailformat}${email}\n\n` +
+                       `🔎 DEEP INVESTIGATION:\n` +
+                       `5. Epieos OSINT:\n${OSINT_LINKS.email.epieos}${email}\n` +
+                       `6. Intelligence X:\n${OSINT_LINKS.email.intelx}${email}\n\n` +
+                       `⚡ VERIFICATION TOOLS:\n` +
+                       `7. Hunter.io Verify:\n${OSINT_LINKS.email.hunter}${email}\n` +
+                       `8. Email Verifier Pro:\n${OSINT_LINKS.email.emailverifier}\n\n` +
+                       `🌐 ADDITIONAL RESOURCES:\n` +
+                       `9. Snov.io Email Finder:\n${OSINT_LINKS.email.snov}\n` +
+                       `10. Holehe Tool (GitHub):\n${OSINT_LINKS.email.holehe}`;
+                }
+            },
+            domain_check: {
+                patterns: ['website', 'domain', 'url', 'site'],
+                handler: (input) => {
+                    const domain = extractDomain(input);
+                    if (!domain) return '🌐 DOMAIN RECONNAISSANCE MODULE:\n\nProvide a domain/URL for investigation.';
+                    
+                return `🌐 DOMAIN INTELLIGENCE REPORT:\n\n` +
+                       `Domain: ${domain}\n` +
+                       `---------------\n` +
+                       `🔍 SECURITY ANALYSIS:\n` +
+                       `1. URLScan Security Check:\n${OSINT_LINKS.domain.urlscan}${domain}\n` +
+                       `2. VirusTotal Scan:\n${OSINT_LINKS.domain.virustotal}${domain}\n\n` +
+                       `🕵️ DOMAIN INTELLIGENCE:\n` +
+                       `3. SecurityTrails Data:\n${OSINT_LINKS.domain.securitytrails}${domain}\n` +
+                       `4. Censys Search:\n${OSINT_LINKS.domain.censys}${domain}\n\n` +
+                       `🌐 INFRASTRUCTURE:\n` +
+                       `5. Shodan Analysis:\n${OSINT_LINKS.domain.shodan}${domain}\n` +
+                       `6. DNS Dumpster Map:\n${OSINT_LINKS.domain.dnsdumpster}\n\n` +
+                       `🔎 DEEP INVESTIGATION:\n` +
+                       `7. SpyOnWeb Connections:\n${OSINT_LINKS.domain.spyonweb}\n` +
+                       `8. ThreatCrowd Intel:\n${OSINT_LINKS.domain.threatcrowd}${domain}\n\n` +
+                       `📜 HISTORICAL DATA:\n` +
+                       `9. WHOIS History:\n${OSINT_LINKS.domain.whois}${domain}\n` +
+                       `10. Wayback Machine:\n${OSINT_LINKS.domain.waybackmachine}${domain}`;
+                }
+            },
+            crypto_scan: {
+                patterns: ['crypto', 'bitcoin', 'wallet'],
+                handler: (input) => {
+                    const address = extractCryptoAddress(input);
+                    if (!address) return '💰 CRYPTOCURRENCY INTELLIGENCE MODULE:\n\nProvide a wallet address for investigation.';
+                    
+                    const type = address.startsWith('0x') ? 'eth' : 'btc';
+                    return `💰 CRYPTOCURRENCY INTELLIGENCE REPORT:\n\n` +
+                           `Address: ${address}\n` +
+                           `Type: ${type.toUpperCase()}\n` +
+                           `---------------\n` +
+                           `🔍 TRANSACTION ANALYSIS:\n` +
+                           `1. ${type === 'eth' ? 'Etherscan' : 'Blockchain.com'} Explorer:\n` +
+                           `${type === 'eth' ? OSINT_LINKS.crypto.etherscan : OSINT_LINKS.crypto.blockchain}${address}\n\n` +
+                           `🕵️ DEEP INVESTIGATION:\n` +
+                           `2. Blockchair Analytics:\n${OSINT_LINKS.crypto.blockchair}${address}\n` +
+                           `3. WalletExplorer Clustering:\n${OSINT_LINKS.crypto.walletexplorer}\n\n` +
+                           `🚨 FRAUD DETECTION:\n` +
+                           `4. Bitcoin Abuse Database:\n${OSINT_LINKS.crypto.bitcoinabuse}${address}\n` +
+                           `5. BitcoinWhosWho Intel:\n${OSINT_LINKS.crypto.bitcoinwhoswho}${address}\n\n` +
+                           `⚡ ADVANCED TOOLS:\n` +
+                           `6. ${type === 'eth' ? 'Ethplorer Details' : 'TokenView Analysis'}:\n` +
+                           `${type === 'eth' ? OSINT_LINKS.crypto.ethplorer : OSINT_LINKS.crypto.tokenview}${address}\n` +
+                           `7. Bloxy Analytics:\n${OSINT_LINKS.crypto.bloxy}${address}\n\n` +
+                           `🌐 VISUALIZATION:\n` +
+                           `8. Breadcrumbs Investigation:\n${OSINT_LINKS.crypto.breadcrumbs}`;
+                }
+            }
+        };
+
+        // Helper functions for data extraction
+        function extractPhoneNumber(text) {
+            const match = text.match(/[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}/);
+            return match ? match[0].replace(/[^\d]/g, '') : null;
+        }
+
+        function extractEmail(text) {
+            const match = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+            return match ? match[0] : null;
+        }
+
+        function extractDomain(text) {
+            const match = text.match(/(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+)/);
+            return match ? match[1] : null;
+        }
+
+        function extractCryptoAddress(text) {
+            const btcMatch = text.match(/[13][a-km-zA-HJ-NP-Z1-9]{25,34}/);
+            const ethMatch = text.match(/0x[a-fA-F0-9]{40}/);
+            return btcMatch ? btcMatch[0] : ethMatch ? ethMatch[0] : null;
+        }
+
+        // Initial message
+        addMessage('S.O.G TACTICAL SYSTEM v2.0\n\nInitializing security protocols...\nLoading threat database...\nActivating OSINT modules...\nEstablishing secure connection...\n\nSYSTEM READY. Awaiting your security query.', 'bot');
+
+        // Event listeners
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', e => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message) {
+                addMessage(message, 'user');
+                showTypingIndicator();
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    const response = analyzeMessage(message.toLowerCase());
+                    addMessage(response, 'bot');
+                }, 1000);
+                userInput.value = '';
+            }
+        }
+
+        function showTypingIndicator() {
+            const typing = document.createElement('div');
+            typing.className = 'typing';
+            typing.innerHTML = '<span>Analyzing</span><span class="dots">...</span>';
+            chatMessages.appendChild(typing);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typing = document.querySelector('.typing');
+            if (typing) typing.remove();
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', `${sender}-message`);
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function analyzeMessage(message) {
+            for (const [category, data] of Object.entries(botPatterns)) {
+                if (data.patterns.some(pattern => message.includes(pattern))) {
+                    return data.handler ? data.handler(message) : data.response;
+                }
+            }
+
+            if (message.includes('help') || message.includes('assist')) {
+                return '🔰 ASSISTANCE PROTOCOLS ACTIVATED:\n\nAvailable Operations:\n1. Phone Intelligence\n2. Email Forensics\n3. Domain Reconnaissance\n4. Crypto Analysis\n5. OSINT Investigation\n\nSelect operation type or describe your security concern.';
+            }
+
+            return 'ANALYZING INPUT...\n\nNo specific threat pattern detected.\nSelect an investigation tool or provide more detailed information for analysis.';
+        }
+
+        function activateTool(tool) {
+            const responses = {
+                phone: '📱 PHONE INTELLIGENCE MODULE:\n\nProvide a phone number for investigation.',
+                email: '📧 EMAIL FORENSICS MODULE:\n\nProvide an email address for investigation.',
+                domain: '🌐 DOMAIN RECONNAISSANCE MODULE:\n\nProvide a domain/URL for investigation.',
+                crypto: '💰 CRYPTOCURRENCY INTELLIGENCE MODULE:\n\nProvide a wallet address for investigation.',
+                report: '🚨 INCIDENT REPORT PROTOCOL:\n\nProvide the following details:\n1. Scam type/method\n2. Contact channels used\n3. Timeline of events\n4. Financial impact\n5. Evidence collected'
+            };
+            addMessage(responses[tool], 'bot');
+        }
+    </script>
+</body>
+</html>

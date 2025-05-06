@@ -1,0 +1,57 @@
+{
+    "target": "142.251.46.228\n",
+    "timestamp": "20250503_174825",
+    "findings": {
+        "timestamp": "2025-05-03 17:48:24",
+        "target": "142.251.46.228\n",
+        "findings": {
+            "ips": [
+                {
+                    "ip": "142.251.46.228",
+                    "threats": [],
+                    "geolocation": {
+                        "status": "success",
+                        "country": "United States",
+                        "countryCode": "US",
+                        "region": "CA",
+                        "regionName": "California",
+                        "city": "San Francisco",
+                        "zip": "94119",
+                        "lat": 37.7749,
+                        "lon": -122.419,
+                        "timezone": "America/Los_Angeles",
+                        "isp": "Google LLC",
+                        "org": "Google LLC",
+                        "as": "AS15169 Google LLC",
+                        "query": "142.251.46.228"
+                    }
+                }
+            ],
+            "domains": [
+                {
+                    "domain": "142.251.46.228",
+                    "threats": [],
+                    "whois": {
+                        "registrar": "MarkMonitor, Inc.",
+                        "creation_date": "2009-09-25 05:40:03",
+                        "expiration_date": "[datetime.datetime(2025, 9, 25, 5, 40, 3), datetime.datetime(2025, 9, 25, 0, 0)]"
+                    }
+                }
+            ]
+        },
+        "analysis": {
+            "risk_level": "low",
+            "threats_found": 0,
+            "data_sources": {
+                "online": [],
+                "offline": [
+                    "local_threat_db"
+                ]
+            },
+            "risk_score": 0,
+            "recommendations": [
+                "Maintain current security measures"
+            ]
+        }
+    }
+}

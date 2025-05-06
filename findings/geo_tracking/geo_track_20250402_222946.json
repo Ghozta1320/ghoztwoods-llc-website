@@ -1,0 +1,13 @@
+{
+    "target": "192.168.1.1",
+    "timestamp": "20250402_222946",
+    "locations": {
+        "timestamp": "2025-04-02 22:29:41",
+        "identifier": "192.168.1.1",
+        "locations": {
+            "ip": {
+                "error": "Failed to track IP: 'str' object has no attribute 'get'"
+            }
+        }
+    }
+}

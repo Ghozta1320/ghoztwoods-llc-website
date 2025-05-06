@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-04-07 11:02:19",
+  "identifier": "+1234567890",
+  "locations": {
+    "phone": {
+      "source": "Phone Tracking",
+      "status": "Service not implemented",
+      "note": "Requires carrier integration"
+    }
+  },
+  "data_sources": {
+    "online": [],
+    "offline": [
+      "local_database"
+    ]
+  }
+}

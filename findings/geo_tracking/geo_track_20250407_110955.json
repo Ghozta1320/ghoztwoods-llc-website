@@ -1,0 +1,30 @@
+{
+    "target": "10.2.0.2",
+    "timestamp": "20250407_110955",
+    "locations": {
+        "timestamp": "2025-04-07 11:09:52",
+        "identifier": "10.2.0.2",
+        "locations": {
+            "ip": {
+                "source": "ipapi.co",
+                "coordinates": [
+                    null,
+                    null
+                ],
+                "city": null,
+                "region": null,
+                "country": null,
+                "isp": null,
+                "last_updated": "2025-04-07 11:09:55"
+            }
+        },
+        "data_sources": {
+            "online": [],
+            "offline": [
+                "local_database"
+            ]
+        },
+        "map_path": null,
+        "saved_to": "findings\\geo_tracking\\track_20250407_110955.json"
+    }
+}

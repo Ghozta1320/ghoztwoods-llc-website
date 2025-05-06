@@ -1,0 +1,32 @@
+{
+    "target": "72.14.178.174",
+    "timestamp": "20250407_130150",
+    "locations": {
+        "timestamp": "2025-04-07 13:01:39",
+        "identifier": "72.14.178.174",
+        "locations": {
+            "ip": {
+                "source": "ip-api.com",
+                "coordinates": [
+                    32.9473,
+                    -96.7028
+                ],
+                "city": "Richardson",
+                "region": "Texas",
+                "country": "United States",
+                "isp": "Akamai Technologies, Inc.",
+                "org": "Linode",
+                "as": "AS63949 Akamai Connected Cloud",
+                "last_updated": "2025-04-07 13:01:40"
+            }
+        },
+        "data_sources": {
+            "online": [],
+            "offline": [
+                "local_database"
+            ]
+        },
+        "map_path": "findings\\geo_tracking\\map_20250407_130140.html",
+        "saved_to": "findings\\geo_tracking\\track_20250407_130140.json"
+    }
+}

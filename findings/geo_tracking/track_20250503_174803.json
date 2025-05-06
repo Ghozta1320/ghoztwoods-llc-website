@@ -1,0 +1,16 @@
+{
+  "timestamp": "2025-05-03 17:48:01",
+  "identifier": "142.251.46.228\n",
+  "locations": {
+    "ip": {
+      "error": "All geolocation services failed",
+      "details": []
+    }
+  },
+  "data_sources": {
+    "online": [],
+    "offline": [
+      "local_database"
+    ]
+  }
+}

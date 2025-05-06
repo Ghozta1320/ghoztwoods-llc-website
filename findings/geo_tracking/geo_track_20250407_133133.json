@@ -1,0 +1,32 @@
+{
+    "target": "146.70.202.2",
+    "timestamp": "20250407_133133",
+    "locations": {
+        "timestamp": "2025-04-07 13:31:21",
+        "identifier": "146.70.202.2",
+        "locations": {
+            "ip": {
+                "source": "ip-api.com",
+                "coordinates": [
+                    40.7218,
+                    -74.0094
+                ],
+                "city": "New York",
+                "region": "New York",
+                "country": "United States",
+                "isp": "M247 Europe SRL",
+                "org": "M247 Ltd New York",
+                "as": "AS9009 M247 Europe SRL",
+                "last_updated": "2025-04-07 13:31:22"
+            }
+        },
+        "data_sources": {
+            "online": [],
+            "offline": [
+                "local_database"
+            ]
+        },
+        "map_path": "findings\\geo_tracking\\map_20250407_133122.html",
+        "saved_to": "findings\\geo_tracking\\track_20250407_133122.json"
+    }
+}

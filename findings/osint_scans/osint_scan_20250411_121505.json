@@ -1,0 +1,23 @@
+{
+    "target": "Ami Blake, 420 Glensford Dr, Fayetteville, NC, 910-487-0000, mbusa",
+    "timestamp": "20250411_121505",
+    "findings": {
+        "timestamp": "2025-04-11 12:14:55",
+        "target": "Ami Blake, 420 Glensford Dr, Fayetteville, NC, 910-487-0000, mbusa",
+        "findings": {},
+        "analysis": {
+            "risk_level": "low",
+            "threats_found": 0,
+            "data_sources": {
+                "online": [],
+                "offline": [
+                    "local_threat_db"
+                ]
+            },
+            "risk_score": 0,
+            "recommendations": [
+                "Maintain current security measures"
+            ]
+        }
+    }
+}

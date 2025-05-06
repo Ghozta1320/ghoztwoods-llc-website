@@ -1,0 +1,85 @@
+{
+    "target": "+18777983752, elonmusk, press@tesla.com, 2.18.48.207",
+    "timestamp": "20250407_125112",
+    "findings": {
+        "timestamp": "2025-04-07 12:51:08",
+        "target": "+18777983752, elonmusk, press@tesla.com, 2.18.48.207",
+        "findings": {
+            "emails": [
+                {
+                    "email": "press@tesla.com",
+                    "domain": "tesla.com",
+                    "threats": [],
+                    "breach_status": "unknown"
+                }
+            ],
+            "phones": [
+                {
+                    "number": "+18777983752",
+                    "valid": true,
+                    "location": {
+                        "country": "",
+                        "carrier": ""
+                    },
+                    "threats": []
+                }
+            ],
+            "ips": [
+                {
+                    "ip": "2.18.48.207",
+                    "threats": [],
+                    "geolocation": {
+                        "status": "success",
+                        "country": "United States",
+                        "countryCode": "US",
+                        "region": "VA",
+                        "regionName": "Virginia",
+                        "city": "Ashburn",
+                        "zip": "20149",
+                        "lat": 39.0438,
+                        "lon": -77.4874,
+                        "timezone": "America/New_York",
+                        "isp": "Akamai International B.V",
+                        "org": "Akamai Technologies",
+                        "as": "AS33905 Akamai International B.V.",
+                        "query": "2.18.48.207"
+                    }
+                }
+            ],
+            "domains": [
+                {
+                    "domain": "tesla.com",
+                    "threats": [],
+                    "whois": {
+                        "registrar": "MarkMonitor, Inc.",
+                        "creation_date": "1992-11-04 05:00:00",
+                        "expiration_date": "[datetime.datetime(2026, 11, 3, 5, 0), datetime.datetime(2026, 11, 3, 0, 0)]"
+                    }
+                },
+                {
+                    "domain": "2.18.48.207",
+                    "threats": [],
+                    "whois": {
+                        "registrar": "MarkMonitor Inc.",
+                        "creation_date": "1998-08-18 04:00:00",
+                        "expiration_date": "2025-08-17 04:00:00"
+                    }
+                }
+            ]
+        },
+        "analysis": {
+            "risk_level": "low",
+            "threats_found": 0,
+            "data_sources": {
+                "online": [],
+                "offline": [
+                    "local_threat_db"
+                ]
+            },
+            "risk_score": 0,
+            "recommendations": [
+                "Maintain current security measures"
+            ]
+        }
+    }
+}

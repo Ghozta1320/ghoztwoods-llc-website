@@ -1,0 +1,27 @@
+{
+  "timestamp": "2025-04-07 11:55:22",
+  "identifier": "8.8.8.8",
+  "locations": {
+    "ip": {
+      "source": "ip-api.com",
+      "coordinates": [
+        39.03,
+        -77.5
+      ],
+      "city": "Ashburn",
+      "region": "Virginia",
+      "country": "United States",
+      "isp": "Google LLC",
+      "org": "Google Public DNS",
+      "as": "AS15169 Google LLC",
+      "last_updated": "2025-04-07 11:55:23"
+    }
+  },
+  "data_sources": {
+    "online": [],
+    "offline": [
+      "local_database"
+    ]
+  },
+  "map_path": "findings\\geo_tracking\\map_20250407_115523.html"
+}

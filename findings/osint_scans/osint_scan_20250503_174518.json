@@ -1,0 +1,46 @@
+{
+    "target": "192.168.1.0\n",
+    "timestamp": "20250503_174518",
+    "findings": {
+        "timestamp": "2025-05-03 17:45:12",
+        "target": "192.168.1.0\n",
+        "findings": {
+            "ips": [
+                {
+                    "ip": "192.168.1.0",
+                    "threats": [],
+                    "geolocation": {
+                        "status": "fail",
+                        "message": "private range",
+                        "query": "192.168.1.0"
+                    }
+                }
+            ],
+            "domains": [
+                {
+                    "domain": "192.168.1.0",
+                    "threats": [],
+                    "whois": {
+                        "registrar": null,
+                        "creation_date": "None",
+                        "expiration_date": "None"
+                    }
+                }
+            ]
+        },
+        "analysis": {
+            "risk_level": "low",
+            "threats_found": 0,
+            "data_sources": {
+                "online": [],
+                "offline": [
+                    "local_threat_db"
+                ]
+            },
+            "risk_score": 0,
+            "recommendations": [
+                "Maintain current security measures"
+            ]
+        }
+    }
+}

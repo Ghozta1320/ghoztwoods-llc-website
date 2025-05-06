@@ -1,0 +1,22 @@
+{
+    "target": "910-429-4456",
+    "timestamp": "20250421_014236",
+    "locations": {
+        "timestamp": "2025-04-21 01:42:36",
+        "identifier": "910-429-4456",
+        "locations": {
+            "phone": {
+                "source": "Phone Tracking",
+                "status": "Service not implemented",
+                "note": "Requires carrier integration"
+            }
+        },
+        "data_sources": {
+            "online": [],
+            "offline": [
+                "local_database"
+            ]
+        },
+        "saved_to": "findings\\geo_tracking\\track_20250421_014236.json"
+    }
+}

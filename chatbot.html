@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.O.G - Scammer Operations Group Bot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="scam-types.html">Common Scams</a></li>
+            <li><a href="resources.html">Help Resources</a></li>
+            <li><a href="report.html">Report a Scam</a></li>
+            <li><a href="about.html">About Us</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>S.O.G - Scammer Operations Group</h2>
+                <p>Tactical Anti-Scam Intelligence System</p>
+            </div>
+            <div class="chat-messages" id="chat-messages"></div>
+            <div class="tools-panel">
+                <button class="tool-button" onclick="activateTool('phone')">📱 Phone Lookup</button>
+                <button class="tool-button" onclick="activateTool('email')">📧 Email Trace</button>
+                <button class="tool-button" onclick="activateTool('domain')">🌐 Domain Check</button>
+                <button class="tool-button" onclick="activateTool('crypto')">💰 Crypto Scan</button>
+                <button class="tool-button" onclick="activateTool('report')">🚨 Report</button>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Enter your message or paste suspicious content...">
+                <button id="send-button">Send</button>
+            </div>
+            <div class="status-bar">
+                System Status: ACTIVE | Database: CONNECTED | Threat Level: MONITORING
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+
+        // Enhanced bot responses with natural language processing
+        const botPatterns = {
+            greeting: {
+                patterns: ['hello', 'hi', 'hey', 'greetings'],
+                response: 'S.O.G TACTICAL SYSTEM ONLINE\n\nAccessing threat database...\nEstablishing secure connection...\nInitializing OSINT modules...\n\nAwaiting your security query.'
+            },
+            phone_analysis: {
+                patterns: ['phone', 'call', 'caller', 'calling', 'telephone', 'mobile'],
+                response: '📱 PHONE INTELLIGENCE MODULE:\n\nInitiating comprehensive scan...\n- Carrier validation\n- Location tracking\n- Spam database check\n- Call pattern analysis\n- Known scammer registry\n\nEnter target phone number for investigation.'
+            },
+            email_trace: {
+                patterns: ['email', 'mail', 'gmail', 'yahoo', 'outlook', 'phishing'],
+                response: '📧 EMAIL FORENSICS ACTIVATED:\n\nDeploying analysis tools...\n- Header investigation\n- Domain reputation check\n- Breach database scan\n- Phishing indicators\n- Attachment safety verification\n\nProvide target email for deep scan.'
+            },
+            domain_check: {
+                patterns: ['website', 'domain', 'url', 'site', 'web', 'link'],
+                response: '🌐 DOMAIN RECONNAISSANCE:\n\nInitiating security audit...\n- WHOIS lookup\n- SSL certificate validation\n- DNS analysis\n- Blacklist status\n- Content safety check\n- Malware scan\n\nEnter target domain for investigation.'
+            },
+            crypto_scan: {
+                patterns: ['crypto', 'bitcoin', 'ethereum', 'wallet', 'blockchain'],
+                response: '💰 CRYPTOCURRENCY INTELLIGENCE:\n\nActivating blockchain analysis...\n- Transaction history\n- Known scam addresses\n- Risk assessment\n- Exchange tracking\n- Pattern recognition\n\nProvide wallet address for investigation.'
+            },
+            scam_report: {
+                patterns: ['scam', 'fraud', 'report', 'stolen', 'fake'],
+                response: '🚨 INCIDENT RESPONSE PROTOCOL:\n\nInitiating report sequence...\n\nRequired information:\n1. Scam type/method\n2. Communication channels used\n3. Timeline of events\n4. Financial impact\n5. Evidence collected\n\nProvide available details for analysis.'
+            },
+            osint: {
+                patterns: ['search', 'find', 'lookup', 'trace', 'track'],
+                response: '🔍 OSINT OPERATIONS ACTIVATED:\n\nAvailable intelligence tools:\n- Digital footprint analysis\n- Social media reconnaissance\n- Deep web scanning\n- Network traffic analysis\n- Metadata extraction\n\nSpecify target type for investigation.'
+            }
+        };
+
+        // Initial message
+        addMessage('S.O.G TACTICAL SYSTEM v2.0\n\nInitializing security protocols...\nLoading threat database...\nActivating OSINT modules...\nEstablishing secure connection...\n\nSYSTEM READY. Awaiting your security query.', 'bot');
+
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', e => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message) {
+                addMessage(message, 'user');
+                showTypingIndicator();
+                setTimeout(() => {
+                    removeTypingIndicator();
+                    const response = analyzeMessage(message.toLowerCase());
+                    addMessage(response, 'bot');
+                }, 1000);
+                userInput.value = '';
+            }
+        }
+
+        function showTypingIndicator() {
+            const typing = document.createElement('div');
+            typing.className = 'typing';
+            typing.innerHTML = '<span>Analyzing</span><span class="dots">...</span>';
+            chatMessages.appendChild(typing);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typing = document.querySelector('.typing');
+            if (typing) typing.remove();
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', `${sender}-message`);
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function analyzeMessage(message) {
+            // Check each pattern category
+            for (const [category, data] of Object.entries(botPatterns)) {
+                if (data.patterns.some(pattern => message.includes(pattern))) {
+                    return data.response;
+                }
+            }
+
+            // Advanced message analysis for unmatched patterns
+            if (message.length > 50) {
+                return '🔍 DEEP CONTENT ANALYSIS:\n\nScanning long-form content...\n- Threat pattern detection\n- Scam indicator analysis\n- Language processing\n- Context evaluation\n\nProcessing...\n\nProvide additional context or select a specific tool for detailed investigation.';
+            }
+
+            if (message.includes('help') || message.includes('assist')) {
+                return '🔰 ASSISTANCE PROTOCOLS ACTIVATED:\n\nAvailable Operations:\n1. Phone Intelligence\n2. Email Forensics\n3. Domain Reconnaissance\n4. Crypto Analysis\n5. OSINT Investigation\n6. Incident Reporting\n\nSelect operation type or describe your security concern.';
+            }
+
+            return 'ANALYZING INPUT...\n\nNo specific threat pattern detected.\nSelect an investigation tool or provide more detailed information for analysis.';
+        }
+
+        function activateTool(tool) {
+            const toolResponses = {
+                phone: botPatterns.phone_analysis.response,
+                email: botPatterns.email_trace.response,
+                domain: botPatterns.domain_check.response,
+                crypto: botPatterns.crypto_scan.response,
+                report: botPatterns.scam_report.response
+            };
+            addMessage(toolResponses[tool], 'bot');
+        }
+    </script>
+</body>
+</html>

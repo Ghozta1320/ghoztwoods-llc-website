@@ -1,0 +1,46 @@
+{
+    "target": "10.2.0.1",
+    "timestamp": "20250407_130506",
+    "findings": {
+        "timestamp": "2025-04-07 13:04:48",
+        "target": "10.2.0.1",
+        "findings": {
+            "ips": [
+                {
+                    "ip": "10.2.0.1",
+                    "threats": [],
+                    "geolocation": {
+                        "status": "fail",
+                        "message": "private range",
+                        "query": "10.2.0.1"
+                    }
+                }
+            ],
+            "domains": [
+                {
+                    "domain": "10.2.0.1",
+                    "threats": [],
+                    "whois": {
+                        "registrar": null,
+                        "creation_date": "None",
+                        "expiration_date": "None"
+                    }
+                }
+            ]
+        },
+        "analysis": {
+            "risk_level": "low",
+            "threats_found": 0,
+            "data_sources": {
+                "online": [],
+                "offline": [
+                    "local_threat_db"
+                ]
+            },
+            "risk_score": 0,
+            "recommendations": [
+                "Maintain current security measures"
+            ]
+        }
+    }
+}

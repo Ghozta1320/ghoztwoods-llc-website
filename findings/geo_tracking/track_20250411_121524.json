@@ -1,0 +1,11 @@
+{
+  "timestamp": "2025-04-11 12:15:24",
+  "identifier": "Ami Blake, 420 Glensford Dr, Fayetteville, NC, 910-487-0000, mbusa",
+  "locations": {},
+  "data_sources": {
+    "online": [],
+    "offline": [
+      "local_database"
+    ]
+  }
+}

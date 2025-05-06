@@ -1,0 +1,168 @@
+"""
+LM Studio Tool Use Demo: Wikipedia Querying Chatbot
+Demonstrates how an LM Studio model can query Wikipedia
+"""
+
+# Standard library imports
+import json
+import sys
+import time
+import urllib.parse
+import urllib.request
+
+# Third-party imports
+import openai
+
+# Initialize OpenAI client
+openai.api_base = "http://127.0.0.1:1234/v1"
+openai.api_key = "lm-studio"
+MODEL = "dolphin3.0-llama3.1-8b"
+
+
+def fetch_wikipedia_content(search_query: str) -> dict: """Fetches Wikipedia content for a given search_query."""
+    try:
+        # Search for the most relevant article
+        search_url = "https://en.wikipedia.org/w/api.php"
+        search_params = {
+    "action": "query",
+    "format": "json",
+    "list": "search",
+    "srsearch": search_query,
+    "srlimit": 1,
+}
+
+        url = f"{search_url}?{urllib.parse.urlencode(search_params)}"
+        with urllib.request.urlopen(url) as response:
+            search_data = json.loads(response.read().decode())
+
+        if not search_data[
+    "query"
+][
+    "search"
+]:
+            return {
+    "status": "error",
+    "message": f"No Wikipedia article found for '{search_query}'",
+}
+
+        # Get the normalized title from search results
+        normalized_title = search_data[
+    "query"
+][
+    "search"
+][
+    0
+][
+    "title"
+]
+
+        # Fetch the actual content with the normalized title
+        content_params = {
+    "action": "query",
+    "format": "json",
+    "titles": normalized_title,
+    "prop": "extracts",
+    "exintro": "true",
+    "explaintext": "true",
+    "redirects": 1,
+}
+
+        url = f"{search_url}?{urllib.parse.urlencode(content_params)}"
+        with urllib.request.urlopen(url) as response:
+            data = json.loads(response.read().decode())
+
+        pages = data[
+    "query"
+][
+    "pages"
+]
+        page_id = list(pages.keys())[
+    0
+]
+
+        if page_id == "-1":
+            return {
+    "status": "error",
+    "message": f"No Wikipedia article found for '{search_query}'",
+}
+
+        content = pages[page_id
+][
+    "extract"
+].strip()
+        return {
+    "status": "success",
+    "content": content,
+    "title": pages[page_id
+    ][
+        "title"
+    ],
+}
+
+    except Exception as e:
+        return {
+    "status": "error",
+    "message": str(e)
+}
+
+
+def chat_loop(): """
+    Main chat loop that processes user input and handles Wikipedia queries.
+    """
+    messages = [
+    {
+        "role": "system",
+        "content": (
+                "You are an assistant that can retrieve Wikipedia articles. ""When asked about a topic, you can retrieve Wikipedia articles ""and cite information from them."
+            ),
+    }
+]
+
+    print(
+        "Assistant: ""Hi! I can access Wikipedia to help answer your questions about history, ""science, people, places, or concepts - or we can just chat about ""anything else!"
+    )
+    print("(Type 'quit' to exit)")
+
+    while True:
+        user_input = input("\nYou: ").strip()
+        if user_input.lower() == "quit":
+            break
+
+        messages.append({
+    "role": "user",
+    "content": user_input
+})
+        try:
+            print("Thinking...")
+            response = openai.ChatCompletion.create(
+                model=MODEL,
+                messages=messages,
+            )
+
+            assistant_message = response.choices[
+    0
+].message[
+    "content"
+]
+            print("\nAssistant:", assistant_message)
+            messages.append({
+    "role": "assistant",
+    "content": assistant_message
+})
+
+        except Exception as e:
+            print(
+                f"\nError chatting with the LM Studio server!\n\n"
+                f"Please ensure:\n"
+                f"1. LM Studio server is running at 127.0.0.1:1234 (hostname:port)\n"
+                f"2. Model '{MODEL}' is downloaded\n"
+                f"3. Model '{MODEL}' is loaded, or that just-in-time model loading is enabled\n\n"
+                f"Error details: {str(e)}\n""See https://lmstudio.ai/docs/basics/server for more information"
+            )
+            exit(1)
+
+
+if __name__ == "__main__":
+    chat_loop()
+
+    print("\nGoodbye!")
