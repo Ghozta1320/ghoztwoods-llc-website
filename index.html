@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scam Protection & Detection Center</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #00ff00;
+        }
+
         .matrix-overlay {
             position: fixed;
             top: 0;
@@ -99,16 +106,99 @@
             display: none;
             position: relative;
             z-index: 1;
+            padding: 2rem;
+            color: #00ff00;
+            background: rgba(0, 0, 0, 0.9);
         }
 
         .show-content {
             display: block;
         }
 
-        .fade-out {
-            opacity: 0;
-            transition: opacity 2s;
-            pointer-events: none;
+        nav {
+            background: rgba(0, 20, 0, 0.8);
+            padding: 1rem;
+            border-bottom: 1px solid #00ff00;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #00ff00;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid #00ff00;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: #004400;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .target-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .group-card {
+            background: rgba(0, 20, 0, 0.8);
+            padding: 2rem;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+        }
+
+        .scan-interface {
+            background: rgba(0, 20, 0, 0.8);
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid #00ff00;
+        }
+
+        input[type="text"] {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 0.5rem;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: #004400;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 0.5rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #006600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #00ff00;
+            margin-top: 2rem;
         }
     </style>
 </head>
@@ -157,9 +247,72 @@
         </div>
     </div>
 
-    <!-- Rest of your content div with the original website content -->
     <div id="content" class="content">
-        <!-- Original website content here -->
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#scam-types">Scam Types</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section class="hero-section">
+                <h1>Advanced Scam Protection & Detection Center</h1>
+                <p>Protecting seniors, veterans, and vulnerable populations from sophisticated scams</p>
+                <p>Powered by Ghoztwoods LLC and Partner Agencies</p>
+            </section>
+
+            <div class="target-groups">
+                <div class="group-card">
+                    <h2>Senior Citizens</h2>
+                    <p>Learn about common scams targeting seniors:</p>
+                    <ul>
+                        <li>Medicare/Health Insurance Scams</li>
+                        <li>Tech Support Fraud</li>
+                        <li>Grandparent Scams</li>
+                        <li>Investment Schemes</li>
+                    </ul>
+                </div>
+
+                <div class="group-card">
+                    <h2>Veterans</h2>
+                    <p>Protection against veteran-specific scams:</p>
+                    <ul>
+                        <li>VA Benefit Scams</li>
+                        <li>Pension Poaching</li>
+                        <li>Fake Military Charities</li>
+                        <li>Service-Related Schemes</li>
+                    </ul>
+                </div>
+
+                <div class="group-card">
+                    <h2>Vulnerable Populations</h2>
+                    <p>Safeguards against targeted exploitation:</p>
+                    <ul>
+                        <li>Government Impersonation</li>
+                        <li>Romance Scams</li>
+                        <li>Lottery/Sweepstakes Fraud</li>
+                        <li>Identity Theft</li>
+                    </ul>
+                </div>
+            </div>
+
+            <section class="scan-interface">
+                <h2>Scam Detection Tool</h2>
+                <p>Enter any suspicious contact information for immediate analysis:</p>
+                <input type="text" id="target-input" placeholder="Enter phone, email, domain, or crypto address...">
+                <button onclick="analyzeThreat()">Analyze Threat</button>
+                
+                <div id="scan-results"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Scam Protection & Detection Center | Powered by Ghoztwoods LLC</p>
+        </footer>
     </div>
 
     <script>
@@ -217,9 +370,21 @@
             enterButton.addEventListener('click', function() {
                 disclaimerModal.style.display = 'none';
                 content.classList.add('show-content');
-                // Keep matrix animation running in background
             });
         });
+
+        function analyzeThreat() {
+            const input = document.getElementById('target-input').value;
+            const results = document.getElementById('scan-results');
+            
+            if (!input) {
+                results.innerHTML = '<p style="color: #ff0000;">Please enter a target to analyze</p>';
+                return;
+            }
+
+            results.innerHTML = '<p>Analyzing threat... Please wait.</p>';
+            // Add your threat analysis logic here
+        }
     </script>
 </body>
 </html>
