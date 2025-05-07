@@ -1,68 +1,271 @@
 <!DOCTYPE html>
-<!-- Previous head content remains the same until the script section -->
-<script>
-    const API_BASE_URL = 'http://localhost:5000';
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scam Protection & Detection Center</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Matrix Loading Screen -->
+    <div id="matrix-container" class="matrix-container">
+        <canvas id="matrix-canvas" class="matrix-effect"></canvas>
+    </div>
 
-    async function analyzeThreat() {
-        // Previous analyzeThreat function remains the same
-    }
+    <!-- Main Content -->
+    <div class="content">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="scam-types.html">Scam Types</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
 
-    function displayResults(results) {
-        // Previous displayResults function remains the same
-    }
+        <main>
+            <section class="hero-section">
+                <h1>Advanced Scam Protection & Detection Center</h1>
+                <p>Protecting seniors, veterans, and vulnerable populations from sophisticated scams</p>
+                <p>Powered by Ghoztwoods LLC and Partner Agencies</p>
+            </section>
 
-    // Modified Matrix effect with auto-stop
-    const canvas = document.createElement('canvas');
-    canvas.classList.add('matrix-effect');
-    document.body.appendChild(canvas);
-    
-    function initMatrix(canvas) {
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+            <div class="target-groups">
+                <div class="group-card">
+                    <h2>Senior Citizens</h2>
+                    <p>Learn about common scams targeting seniors:</p>
+                    <ul>
+                        <li>Medicare/Health Insurance Scams</li>
+                        <li>Tech Support Fraud</li>
+                        <li>Grandparent Scams</li>
+                        <li>Investment Schemes</li>
+                    </ul>
+                </div>
 
-        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
-        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const nums = '0123456789';
-        const alphabet = katakana + latin + nums;
+                <div class="group-card">
+                    <h2>Veterans</h2>
+                    <p>Protection against veteran-specific scams:</p>
+                    <ul>
+                        <li>VA Benefit Scams</li>
+                        <li>Pension Poaching</li>
+                        <li>Fake Military Charities</li>
+                        <li>Service-Related Schemes</li>
+                    </ul>
+                </div>
 
-        const fontSize = 16;
-        const columns = canvas.width/fontSize;
-        const rainDrops = Array(Math.floor(columns)).fill(1);
+                <div class="group-card">
+                    <h2>Vulnerable Populations</h2>
+                    <p>Safeguards against targeted exploitation:</p>
+                    <ul>
+                        <li>Government Impersonation</li>
+                        <li>Romance Scams</li>
+                        <li>Lottery/Sweepstakes Fraud</li>
+                        <li>Identity Theft</li>
+                    </ul>
+                </div>
+            </div>
 
-        function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            <section class="scan-interface">
+                <div class="input-section">
+                    <h2>Scam Detection Tool</h2>
+                    <p>Enter any suspicious contact information for immediate analysis:</p>
+                    <input type="text" id="target-input" placeholder="Enter phone, email, domain, or crypto address...">
+                    <button class="scan-button" onclick="analyzeThreat()">Analyze Threat</button>
+                    
+                    <div class="capabilities-list">
+                        <h3>Advanced Detection Capabilities:</h3>
+                        
+                        <div class="capability-group">
+                            <h3>Phone Intelligence</h3>
+                            <ul>
+                                <li>Sync.me & PhoneInfoga Analysis</li>
+                                <li>WhitePages & Spokeo Integration</li>
+                                <li>Carrier & Location Tracking</li>
+                            </ul>
+                        </div>
 
-            ctx.fillStyle = '#0F0';
-            ctx.font = fontSize + 'px monospace';
+                        <div class="capability-group">
+                            <h3>Email Analysis</h3>
+                            <ul>
+                                <li>DeHashed Database Checks</li>
+                                <li>Intelligence X & Epieos OSINT</li>
+                                <li>Social Media Presence Detection</li>
+                            </ul>
+                        </div>
 
-            for(let i = 0; i < rainDrops.length; i++) {
-                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
-                
-                if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975) {
-                    rainDrops[i] = 0;
+                        <div class="capability-group">
+                            <h3>Domain Intelligence</h3>
+                            <ul>
+                                <li>SecurityTrails Historical Data</li>
+                                <li>Infrastructure Analysis</li>
+                                <li>Connected Domain Mapping</li>
+                            </ul>
+                        </div>
+
+                        <div class="capability-group">
+                            <h3>Crypto Investigation</h3>
+                            <ul>
+                                <li>Blockchain Analytics</li>
+                                <li>Transaction Pattern Analysis</li>
+                                <li>Wallet Clustering</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analysis-section">
+                    <div id="scan-results" class="analysis-panel">
+                        <h3>Scan Results</h3>
+                        <div id="results-content">
+                            <p>Enter a target to begin analysis...</p>
+                        </div>
+                    </div>
+
+                    <div id="threat-intel" class="analysis-panel">
+                        <h3>Threat Intelligence</h3>
+                        <div id="intel-content">
+                            <p>Waiting for analysis...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Scam Protection & Detection Center | Powered by Ghoztwoods LLC</p>
+        </footer>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000';
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize matrix effect
+            const canvas = document.getElementById('matrix-canvas');
+            if (canvas) {
+                initMatrix(canvas);
+            }
+        });
+
+        function initMatrix(canvas) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+            const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const nums = '0123456789';
+            const alphabet = katakana + latin + nums;
+
+            const fontSize = 16;
+            const columns = canvas.width/fontSize;
+            const rainDrops = Array(Math.floor(columns)).fill(1);
+
+            function draw() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = '#0F0';
+                ctx.font = fontSize + 'px monospace';
+
+                for(let i = 0; i < rainDrops.length; i++) {
+                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                    ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
+                    
+                    if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975) {
+                        rainDrops[i] = 0;
+                    }
+                    rainDrops[i]++;
                 }
-                rainDrops[i]++;
+            }
+
+            // Start matrix effect
+            const matrixInterval = setInterval(draw, 30);
+
+            // Stop matrix effect after 5 seconds and fade out
+            setTimeout(() => {
+                clearInterval(matrixInterval);
+                const container = document.getElementById('matrix-container');
+                if (container) {
+                    container.style.transition = 'opacity 2s';
+                    container.style.opacity = '0';
+                    // Remove container after fade out
+                    setTimeout(() => {
+                        container.style.display = 'none';
+                    }, 2000);
+                }
+            }, 5000);
+        }
+
+        async function analyzeThreat() {
+            const target = document.getElementById('target-input').value;
+            if (!target) return;
+
+            const resultsDiv = document.getElementById('results-content');
+            const intelDiv = document.getElementById('intel-content');
+
+            resultsDiv.innerHTML = '<p>Analyzing target...</p>';
+            intelDiv.innerHTML = '<p>Gathering intelligence...</p>';
+
+            try {
+                const endpoints = [
+                    { type: 'phone', url: `${API_BASE_URL}/api/phone-intel` },
+                    { type: 'email', url: `${API_BASE_URL}/api/email-analysis` },
+                    { type: 'domain', url: `${API_BASE_URL}/api/domain-recon` },
+                    { type: 'crypto', url: `${API_BASE_URL}/api/crypto-investigation` }
+                ];
+
+                const results = await Promise.all(endpoints.map(endpoint => 
+                    fetch(endpoint.url, {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        body: JSON.stringify({ target })
+                    }).then(res => res.json())
+                    .catch(err => ({ type: endpoint.type, error: true }))
+                ));
+
+                displayResults(results);
+            } catch (error) {
+                resultsDiv.innerHTML = '<p class="error">Error during analysis</p>';
+                intelDiv.innerHTML = '<p class="error">Intelligence gathering failed</p>';
             }
         }
 
-        // Start matrix effect
-        const matrixInterval = setInterval(draw, 30);
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('results-content');
+            const intelDiv = document.getElementById('intel-content');
 
-        // Stop matrix effect after 5 seconds and fade out
-        setTimeout(() => {
-            clearInterval(matrixInterval);
-            canvas.style.transition = 'opacity 2s';
-            canvas.style.opacity = '0';
-            // Remove canvas after fade out
-            setTimeout(() => {
-                canvas.remove();
-            }, 2000);
-        }, 5000);
-    }
+            let resultsHtml = '<h3>Analysis Results:</h3>';
+            let intelHtml = '<h3>Threat Intelligence:</h3>';
 
-    // Initialize matrix effect when page loads
-    window.addEventListener('load', () => initMatrix(canvas));
-</script>
+            results.forEach(result => {
+                if (result.error) {
+                    resultsHtml += `<p class="error">Error analyzing ${result.type}</p>`;
+                } else {
+                    resultsHtml += `<div class="result-section">
+                        <h4>${result.type.toUpperCase()} Analysis</h4>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    </div>`;
+
+                    if (result.risk_factors) {
+                        intelHtml += `<div class="intel-section">
+                            <h4>${result.type.toUpperCase()} Threats</h4>
+                            <ul>
+                                ${result.risk_factors.map(risk => `<li>${risk}</li>`).join('')}
+                            </ul>
+                        </div>`;
+                    }
+                }
+            });
+
+            resultsDiv.innerHTML = resultsHtml;
+            intelDiv.innerHTML = intelHtml;
+        }
+    </script>
+</body>
+</html>
