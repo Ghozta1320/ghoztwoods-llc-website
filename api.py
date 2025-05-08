@@ -223,7 +223,7 @@ def perform_google_search(query):
         return []
 
 @app.route('/api/scan', methods=['POST'])
-async def scan():
+def scan():
     data = request.json
     if not data or 'target' not in data:
         return jsonify({"error": "No target provided"}), 400
@@ -249,7 +249,7 @@ async def scan():
     return jsonify(results)
 
 @app.route('/api/phone-intel', methods=['POST'])
-async def phone_intel():
+def phone_intel():
     data = request.json
     if not data or 'target' not in data:
         return jsonify({"error": "No target provided"}), 400
@@ -258,7 +258,7 @@ async def phone_intel():
     return jsonify(results)
 
 @app.route('/api/email-analysis', methods=['POST'])
-async def email_analysis():
+def email_analysis():
     data = request.json
     if not data or 'target' not in data:
         return jsonify({"error": "No target provided"}), 400
@@ -267,7 +267,7 @@ async def email_analysis():
     return jsonify(results)
 
 @app.route('/api/domain-recon', methods=['POST'])
-async def domain_recon():
+def domain_recon():
     data = request.json
     if not data or 'target' not in data:
         return jsonify({"error": "No target provided"}), 400
