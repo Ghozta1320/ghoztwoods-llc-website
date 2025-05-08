@@ -3,54 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report a Scam - Scam Protection & Detection Center</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="auth.js"></script>
+    <title>Report a Scam - Scam Awareness & Protection</title>
     <style>
-        .report-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: rgba(0, 51, 0, 0.3);
-            border: 1px solid var(--border-color);
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #0f0;
         }
-
+        nav {
+            background-color: #001;
+            padding: 1rem;
+            border-bottom: 2px solid #0f0;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 1rem;
+        }
+        nav ul li a {
+            color: #0f0;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            color: #fff;
+        }
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        form {
+            background-color: #001;
+            padding: 2rem;
+            border: 2px solid #0f0;
+            border-radius: 5px;
+        }
         .form-group {
             margin-bottom: 1.5rem;
         }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #0f0;
         }
-
-        .full-width {
-            grid-column: 1 / -1;
-        }
-
-        .submit-button {
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            padding: 1rem 2rem;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
+        input, textarea, select {
             width: 100%;
-            font-size: 1.1rem;
-            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: #000;
+            border: 1px solid #0f0;
+            color: #0f0;
+            border-radius: 3px;
         }
-
-        .submit-button:hover {
-            background-color: var(--primary-color);
-            color: var(--background-color);
+        button {
+            background-color: #0f0;
+            color: #000;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 3px;
         }
-
-        .emergency-notice {
-            background: rgba(255, 0, 0, 0.2);
-            border: 1px solid #ff0000;
-            padding: 1rem;
-            margin-bottom: 2rem;
+        button:hover {
+            background-color: #0a0;
+        }
+        h1 {
             text-align: center;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+        }
+        footer {
+            background-color: #001;
+            color: #0f0;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 2px solid #0f0;
         }
     </style>
 </head>
@@ -58,133 +94,52 @@
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="scam-types.html">Scam Types</a></li>
-            <li><a href="resources.html">Resources</a></li>
-            <li><a href="report.html">Report</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="scam-types.html">Common Scams</a></li>
+            <li><a href="report.html">Report a Scam</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="chatbot.html">AI Assistant</a></li>
         </ul>
     </nav>
 
     <main>
         <h1>Report a Scam</h1>
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
 
-        <div class="emergency-notice">
-            <h3>⚠️ If you're currently being scammed or in immediate danger:</h3>
-            <p>Call Emergency Hotline: 1-800-XXX-XXXX (24/7)</p>
-            <p>Or contact your local law enforcement</p>
-        </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
 
-        <div class="report-container">
-            <form id="report-form" onsubmit="submitReport(event)">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="name">Your Name:</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
+            <div class="form-group">
+                <label for="scam-type">Type of Scam:</label>
+                <select id="scam-type" name="scam-type" required>
+                    <option value="">Select a scam type</option>
+                    <option value="phone">Phone Scam</option>
+                    <option value="email">Email Phishing</option>
+                    <option value="gift-card">Gift Card Scam</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
 
-                    <div class="form-group">
-                        <label for="email">Email Address:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
+            <div class="form-group">
+                <label for="description">Describe the Scam Attempt:</label>
+                <textarea id="description" name="description" rows="5" required></textarea>
+            </div>
 
-                    <div class="form-group">
-                        <label for="phone">Phone Number:</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
+            <div class="form-group">
+                <label for="date">Date of Incident:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
 
-                    <div class="form-group">
-                        <label for="location">Location:</label>
-                        <input type="text" id="location" name="location" placeholder="City, State" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="scam-type">Type of Scam:</label>
-                        <select id="scam-type" name="scam-type" required>
-                            <option value="">Select a scam type</option>
-                            <option value="phone">Phone Scam</option>
-                            <option value="email">Email Phishing</option>
-                            <option value="crypto">Cryptocurrency Scam</option>
-                            <option value="identity">Identity Theft</option>
-                            <option value="medicare">Medicare Fraud</option>
-                            <option value="veteran">Veteran Benefits Scam</option>
-                            <option value="tech">Tech Support Scam</option>
-                            <option value="romance">Romance Scam</option>
-                            <option value="investment">Investment Fraud</option>
-                            <option value="gift-card">Gift Card Scam</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="date">Date of Incident:</label>
-                        <input type="date" id="date" name="date" required>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="description">Detailed Description:</label>
-                        <textarea id="description" name="description" rows="5" required 
-                            placeholder="Please provide as much detail as possible about the scam attempt..."></textarea>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="evidence">Evidence (URLs, phone numbers, emails, etc.):</label>
-                        <textarea id="evidence" name="evidence" rows="3"
-                            placeholder="Include any relevant links, phone numbers, or other evidence..."></textarea>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label>
-                            <input type="checkbox" name="consent" required>
-                            I consent to share this information with relevant law enforcement and investigation teams
-                        </label>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label>
-                            <input type="checkbox" name="updates">
-                            I would like to receive updates about my report
-                        </label>
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-button">Submit Report</button>
-            </form>
-        </div>
+            <button type="submit">Submit Report</button>
+        </form>
     </main>
 
-    <script>
-        async function submitReport(event) {
-            event.preventDefault();
-            
-            const formData = new FormData(event.target);
-            const reportData = Object.fromEntries(formData.entries());
-
-            try {
-                const response = await fetch('/api/submit-report', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(reportData)
-                });
-
-                if (response.ok) {
-                    alert('Thank you for your report. Our investigation team will review it promptly.');
-                    event.target.reset();
-                } else {
-                    throw new Error('Failed to submit report');
-                }
-            } catch (error) {
-                alert('Error submitting report. Please try again or contact our support team.');
-                console.error('Error:', error);
-            }
-        }
-    </script>
-
     <footer>
-        <p>&copy; 2024 Scam Protection & Detection Center | Powered by Ghoztwoods LLC</p>
+        <p>&copy; 2024 Scam Awareness & Protection. Created by Avery Delpit</p>
     </footer>
 </body>
 </html>

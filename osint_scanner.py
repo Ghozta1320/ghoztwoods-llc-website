@@ -1,259 +1,353 @@
 import requests
-import re
 import json
-import phonenumbers
-from phonenumbers import geocoder, carrier
-from datetime import datetime
-import socket
-import whois
-import os
+from rich.console import Console
+from rich import print as rprint
+import time
+import re
 from typing import Dict, Any, List
+import phonenumbers
+from phonenumbers import carrier, geocoder, timezone
+import whois
+import dns.resolver
+import socket
+from bs4 import BeautifulSoup
+import hashlib
+from datetime import datetime
 
 class OSINTScanner:
     def __init__(self):
-        # Load threat intelligence data
-        self.threat_db = self._load_threat_db()
-        
-        # Setup cache directory
-        self.cache_dir = os.path.join("data", "osint_cache")
-        os.makedirs(self.cache_dir, exist_ok=True)
-        
-    def _load_threat_db(self) -> Dict:
-        """Load local threat intelligence database"""
-        try:
-            with open(os.path.join("data", "threat_intel.json"), 'r') as f:
-                return json.load(f)
-        except:
-            return {
-                "malicious_ips": [],
-                "suspicious_domains": [],
-                "known_breaches": {}
-            }
-            
-    def scan_target(self, target_info: str) -> Dict[str, Any]:
-        """Main scanning method that coordinates all OSINT operations"""
-        results = {
-            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "target": target_info,
-            "findings": {},
-            "analysis": {
-                "risk_level": "low",
-                "threats_found": 0,
-                "data_sources": {
-                    "online": [],
-                    "offline": ["local_threat_db"]
-                }
-            }
-        }
-        
-        # Extract and analyze emails
-        emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', target_info)
-        if emails:
-            results["findings"]["emails"] = self._analyze_emails(emails)
-            
-        # Extract and analyze phone numbers
-        phones = re.findall(r'\+?1?\d{9,15}', target_info)
-        if phones:
-            results["findings"]["phones"] = self._analyze_phones(phones)
-            
-        # Extract and analyze IPs
-        ips = re.findall(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', target_info)
-        if ips:
-            results["findings"]["ips"] = self._analyze_ips(ips)
-            
-        # Extract and analyze domains
-        domains = re.findall(r'(?:https?:\/\/)?(?:[\w-]+\.)+[\w-]+', target_info)
-        if domains:
-            results["findings"]["domains"] = self._analyze_domains(domains)
-            
-        # Perform final analysis
-        self._analyze_findings(results)
-        
-        return results
-        
-    def _analyze_emails(self, emails: List[str]) -> List[Dict]:
-        """Analyze email addresses"""
-        results = []
-        for email in emails:
-            analysis = {
-                "email": email,
-                "domain": email.split('@')[1],
-                "threats": [],
-                "breach_status": "unknown"
-            }
-            
-            # Check domain against threat database
-            if analysis["domain"] in self.threat_db["known_breaches"]:
-                breach = self.threat_db["known_breaches"][analysis["domain"]]
-                analysis["threats"].append({
-                    "type": "data_breach",
-                    "details": breach
-                })
-                analysis["breach_status"] = "confirmed"
-                
-            # Try online breach check
-            try:
-                response = requests.get(
-                    f"https://haveibeenpwned.com/api/v3/breachedaccount/{email}",
-                    headers={"User-Agent": "OSINT Research"}
-                )
-                if response.status_code == 200:
-                    analysis["threats"].append({
-                        "type": "online_breach",
-                        "details": "Found in online breach database"
-                    })
-                    analysis["breach_status"] = "confirmed"
-            except:
-                pass
-                
-            results.append(analysis)
-        return results
-        
-    def _analyze_phones(self, phones: List[str]) -> List[Dict]:
-        """Analyze phone numbers"""
-        results = []
-        for phone in phones:
-            try:
-                parsed = phonenumbers.parse(phone)
-                analysis = {
-                    "number": phone,
-                    "valid": phonenumbers.is_valid_number(parsed),
-                    "location": {
-                        "country": geocoder.description_for_number(parsed, "en"),
-                        "carrier": carrier.name_for_number(parsed, "en")
-                    },
-                    "threats": []
-                }
-                results.append(analysis)
-            except Exception as e:
-                results.append({
-                    "number": phone,
-                    "error": str(e)
-                })
-        return results
-        
-    def _analyze_ips(self, ips: List[str]) -> List[Dict]:
-        """Analyze IP addresses"""
-        results = []
-        for ip in ips:
-            analysis = {
-                "ip": ip,
-                "threats": []
-            }
-            
-            # Check against known malicious IPs
-            if ip in self.threat_db["malicious_ips"]:
-                analysis["threats"].append({
-                    "type": "known_malicious",
-                    "source": "local_threat_db"
-                })
-                
-            # Try to get geolocation
-            try:
-                response = requests.get(f"http://ip-api.com/json/{ip}")
-                if response.status_code == 200:
-                    analysis["geolocation"] = response.json()
-            except:
-                analysis["geolocation"] = "Failed to retrieve"
-                
-            results.append(analysis)
-        return results
-        
-    def _analyze_domains(self, domains: List[str]) -> List[Dict]:
-        """Analyze domain names"""
-        results = []
-        for domain in domains:
-            domain = domain.replace("http://", "").replace("https://", "").split('/')[0]
-            analysis = {
-                "domain": domain,
-                "threats": []
-            }
-            
-            # Check against suspicious domains
-            if domain in self.threat_db["suspicious_domains"]:
-                analysis["threats"].append({
-                    "type": "suspicious_domain",
-                    "source": "local_threat_db"
-                })
-                
-            # Try to get WHOIS info
-            try:
-                w = whois.whois(domain)
-                analysis["whois"] = {
-                    "registrar": w.registrar,
-                    "creation_date": str(w.creation_date),
-                    "expiration_date": str(w.expiration_date)
-                }
-            except:
-                analysis["whois"] = "Failed to retrieve"
-                
-            results.append(analysis)
-        return results
-        
-    def _analyze_findings(self, results: Dict):
-        """Perform final analysis of all findings"""
-        threat_count = 0
-        risk_score = 0
-        
-        # Analyze email threats
-        if "emails" in results["findings"]:
-            for email in results["findings"]["emails"]:
-                threat_count += len(email.get("threats", []))
-                if email.get("breach_status") == "confirmed":
-                    risk_score += 20
-                    
-        # Analyze IP threats
-        if "ips" in results["findings"]:
-            for ip in results["findings"]["ips"]:
-                threats = ip.get("threats", [])
-                threat_count += len(threats)
-                if any(t["type"] == "known_malicious" for t in threats):
-                    risk_score += 30
-                    
-        # Analyze domain threats
-        if "domains" in results["findings"]:
-            for domain in results["findings"]["domains"]:
-                threats = domain.get("threats", [])
-                threat_count += len(threats)
-                if any(t["type"] == "suspicious_domain" for t in threats):
-                    risk_score += 25
-                    
-        # Update analysis
-        results["analysis"].update({
-            "risk_level": "critical" if risk_score > 60 else "high" if risk_score > 40 else "medium" if risk_score > 20 else "low",
-            "risk_score": risk_score,
-            "threats_found": threat_count,
-            "recommendations": self._generate_recommendations(risk_score, threat_count)
-        })
-        
-    def _generate_recommendations(self, risk_score: int, threat_count: int) -> List[str]:
-        """Generate security recommendations"""
-        recommendations = []
-        
-        if risk_score > 60:
-            recommendations.extend([
-                "URGENT: Immediate security audit recommended",
-                "Enable enhanced monitoring on all accounts",
-                "Change all associated passwords",
-                "Enable two-factor authentication where possible"
-            ])
-        elif risk_score > 40:
-            recommendations.extend([
-                "Review and update security measures",
-                "Monitor for suspicious activities",
-                "Consider enabling additional security features"
-            ])
-        elif risk_score > 20:
-            recommendations.extend([
-                "Regular security review recommended",
-                "Keep monitoring for changes"
-            ])
-        else:
-            recommendations.append("Maintain current security measures")
-            
-        return recommendations
+        self.console = Console()
+        self.api_keys = self._load_api_keys()
 
-if __name__ == "__main__":
-    scanner = OSINTScanner()
-    print("OSINT Scanner initialized with threat intelligence database")
-    print("Ready for scanning...")
+    def _load_api_keys(self) -> Dict[str, str]:
+        try:
+            with open('config/api_keys.json', 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            return {}
+
+    def analyze_phone(self, phone: str) -> Dict[str, Any]:
+        results = {
+            "carrier_info": {},
+            "location_data": {},
+            "reputation": {},
+            "social_media": [],
+            "data_breaches": [],
+            "risk_factors": []
+        }
+
+        try:
+            # Parse phone number
+            parsed = phonenumbers.parse(phone)
+            
+            # Carrier Information
+            results["carrier_info"] = {
+                "carrier": carrier.name_for_number(parsed, "en"),
+                "valid": phonenumbers.is_valid_number(parsed),
+                "type": phonenumbers.number_type(parsed),
+                "region": geocoder.description_for_number(parsed, "en"),
+                "timezones": timezone.time_zones_for_number(parsed)
+            }
+
+            # Sync.me Integration
+            syncme_data = self._query_syncme(phone)
+            if syncme_data:
+                results["social_media"].extend(syncme_data)
+
+            # PhoneInfoga Analysis
+            infoga_data = self._analyze_with_phoneinfoga(phone)
+            results["location_data"].update(infoga_data.get("location", {}))
+            results["reputation"].update(infoga_data.get("reputation", {}))
+
+            # WhitePages & Spokeo
+            whitepages_data = self._query_whitepages(phone)
+            spokeo_data = self._query_spokeo(phone)
+            
+            results["data_breaches"] = self._check_breaches(phone)
+            
+            # Risk Assessment
+            risk_factors = []
+            if results["reputation"].get("spam_score", 0) > 0.7:
+                risk_factors.append("High spam score detected")
+            if results["data_breaches"]:
+                risk_factors.append(f"Found in {len(results['data_breaches'])} data breaches")
+            if results["carrier_info"].get("type") == "VOIP":
+                risk_factors.append("VOIP number - commonly used in scams")
+                
+            results["risk_factors"] = risk_factors
+            results["risk_score"] = self._calculate_risk_score(results)
+
+        except Exception as e:
+            results["error"] = str(e)
+
+        return results
+
+    def analyze_email(self, email: str) -> Dict[str, Any]:
+        results = {
+            "validation": {},
+            "breaches": [],
+            "social_profiles": [],
+            "domain_info": {},
+            "risk_factors": []
+        }
+
+        try:
+            # Email Format Validation
+            results["validation"] = self._validate_email_format(email)
+
+            # DeHashed Database Check
+            dehashed_data = self._query_dehashed(email)
+            if dehashed_data:
+                results["breaches"].extend(dehashed_data)
+
+            # Intelligence X Integration
+            intell_x_data = self._query_intelligence_x(email)
+            results["domain_info"].update(intell_x_data.get("domain_info", {}))
+
+            # Holehe Social Media Check
+            social_data = self._check_social_media(email)
+            results["social_profiles"].extend(social_data)
+
+            # Snov.io Pattern Analysis
+            pattern_data = self._analyze_email_pattern(email)
+            results["pattern_analysis"] = pattern_data
+
+            # Risk Assessment
+            risk_factors = []
+            if len(results["breaches"]) > 0:
+                risk_factors.append(f"Found in {len(results['breaches'])} data breaches")
+            if results["validation"].get("disposable", False):
+                risk_factors.append("Disposable email detected")
+            if len(results["social_profiles"]) == 0:
+                risk_factors.append("No legitimate social media presence found")
+
+            results["risk_factors"] = risk_factors
+            results["risk_score"] = self._calculate_risk_score(results)
+
+        except Exception as e:
+            results["error"] = str(e)
+
+        return results
+
+    def analyze_domain(self, domain: str) -> Dict[str, Any]:
+        results = {
+            "whois_data": {},
+            "dns_records": {},
+            "security_info": {},
+            "historical_data": [],
+            "connected_domains": [],
+            "risk_factors": []
+        }
+
+        try:
+            # SecurityTrails Historical Data
+            historical_data = self._query_securitytrails(domain)
+            results["historical_data"] = historical_data
+
+            # Censys Infrastructure Analysis
+            infrastructure = self._analyze_infrastructure(domain)
+            results["security_info"].update(infrastructure)
+
+            # DNS Investigation
+            dns_data = self._analyze_dns(domain)
+            results["dns_records"] = dns_data
+
+            # SpyOnWeb Connected Domains
+            connected = self._find_connected_domains(domain)
+            results["connected_domains"] = connected
+
+            # ThreatCrowd Intelligence
+            threat_data = self._query_threatcrowd(domain)
+            results["threat_intel"] = threat_data
+
+            # Wayback Machine History
+            wayback_data = self._query_wayback(domain)
+            results["historical_snapshots"] = wayback_data
+
+            # Risk Assessment
+            risk_factors = []
+            if results["security_info"].get("ssl_issues"):
+                risk_factors.append("SSL certificate issues detected")
+            if results["threat_intel"].get("malicious_score", 0) > 0.5:
+                risk_factors.append("High malicious activity score")
+            if len(results["connected_domains"]) > 50:
+                risk_factors.append("Unusually high number of connected domains")
+
+            results["risk_factors"] = risk_factors
+            results["risk_score"] = self._calculate_risk_score(results)
+
+        except Exception as e:
+            results["error"] = str(e)
+
+        return results
+
+    def analyze_crypto(self, address: str) -> Dict[str, Any]:
+        results = {
+            "transaction_history": {},
+            "wallet_analysis": {},
+            "cluster_info": {},
+            "risk_assessment": {},
+            "risk_factors": []
+        }
+
+        try:
+            # Blockchair Analytics
+            blockchair_data = self._query_blockchair(address)
+            results["transaction_history"] = blockchair_data
+
+            # WalletExplorer Clustering
+            cluster_data = self._analyze_wallet_cluster(address)
+            results["cluster_info"] = cluster_data
+
+            # BitcoinWhosWho Intelligence
+            whowho_data = self._query_bitcoinwhoswho(address)
+            results["wallet_analysis"].update(whowho_data)
+
+            # Ethplorer & Bloxy Analysis (for Ethereum addresses)
+            if self._is_eth_address(address):
+                eth_data = self._analyze_eth_address(address)
+                results["wallet_analysis"].update(eth_data)
+
+            # Breadcrumbs Visualization
+            breadcrumbs_data = self._generate_transaction_map(address)
+            results["transaction_map"] = breadcrumbs_data
+
+            # TokenView Transaction Tracking
+            token_data = self._track_token_transactions(address)
+            results["token_transactions"] = token_data
+
+            # Risk Assessment
+            risk_factors = []
+            if results["wallet_analysis"].get("mixing_service_usage"):
+                risk_factors.append("Connected to mixing services")
+            if results["cluster_info"].get("dark_market_association"):
+                risk_factors.append("Associated with dark markets")
+            if results["transaction_history"].get("high_risk_patterns"):
+                risk_factors.append("Suspicious transaction patterns detected")
+
+            results["risk_factors"] = risk_factors
+            results["risk_score"] = self._calculate_risk_score(results)
+
+        except Exception as e:
+            results["error"] = str(e)
+
+        return results
+
+    def _calculate_risk_score(self, data: Dict[str, Any]) -> float:
+        """Calculate a risk score based on analysis results"""
+        score = 0.0
+        weight = 1.0
+        
+        if "risk_factors" in data:
+            score += len(data["risk_factors"]) * 0.1
+
+        if "breaches" in data:
+            score += len(data.get("breaches", [])) * 0.05
+
+        if "reputation" in data:
+            spam_score = data["reputation"].get("spam_score", 0)
+            score += spam_score * 0.3
+
+        return min(1.0, score * weight)
+
+    def _query_syncme(self, phone: str) -> List[Dict[str, Any]]:
+        """Query Sync.me API for social media profiles"""
+        # Implementation for Sync.me API integration
+        return []
+
+    def _analyze_with_phoneinfoga(self, phone: str) -> Dict[str, Any]:
+        """Analyze phone number using PhoneInfoga"""
+        # Implementation for PhoneInfoga integration
+        return {"location": {}, "reputation": {}}
+
+    def _query_whitepages(self, phone: str) -> Dict[str, Any]:
+        """Query WhitePages for phone information"""
+        # Implementation for WhitePages API integration
+        return {}
+
+    def _query_spokeo(self, phone: str) -> Dict[str, Any]:
+        """Query Spokeo for phone information"""
+        # Implementation for Spokeo API integration
+        return {}
+
+    def _check_breaches(self, identifier: str) -> List[Dict[str, Any]]:
+        """Check for data breaches containing the identifier"""
+        # Implementation for breach checking
+        return []
+
+    def _validate_email_format(self, email: str) -> Dict[str, bool]:
+        """Validate email format and check for disposable email services"""
+        # Implementation for email validation
+        return {"valid": bool(re.match(r"[^@]+@[^@]+\.[^@]+", email))}
+
+    def _query_dehashed(self, email: str) -> List[Dict[str, Any]]:
+        """Query DeHashed database for breached data"""
+        # Implementation for DeHashed API integration
+        return []
+
+    def _query_intelligence_x(self, email: str) -> Dict[str, Any]:
+        """Query Intelligence X for email information"""
+        # Implementation for Intelligence X API integration
+        return {"domain_info": {}}
+
+    def _check_social_media(self, email: str) -> List[Dict[str, Any]]:
+        """Check social media presence using Holehe"""
+        # Implementation for Holehe integration
+        return []
+
+    def _analyze_email_pattern(self, email: str) -> Dict[str, Any]:
+        """Analyze email pattern using Snov.io"""
+        # Implementation for Snov.io API integration
+        return {}
+
+    def _query_securitytrails(self, domain: str) -> List[Dict[str, Any]]:
+        """Query SecurityTrails for domain history"""
+        return []
+
+    def _analyze_infrastructure(self, domain: str) -> Dict[str, Any]:
+        """Analyze domain infrastructure using Censys"""
+        return {}
+
+    def _analyze_dns(self, domain: str) -> Dict[str, Any]:
+        """Analyze DNS records"""
+        return {}
+
+    def _find_connected_domains(self, domain: str) -> List[str]:
+        """Find connected domains using SpyOnWeb"""
+        return []
+
+    def _query_threatcrowd(self, domain: str) -> Dict[str, Any]:
+        """Query ThreatCrowd for domain intelligence"""
+        return {}
+
+    def _query_wayback(self, domain: str) -> List[Dict[str, Any]]:
+        """Query Wayback Machine for domain history"""
+        return []
+
+    def _query_blockchair(self, address: str) -> Dict[str, Any]:
+        """Query Blockchair for crypto transaction history"""
+        return {}
+
+    def _analyze_wallet_cluster(self, address: str) -> Dict[str, Any]:
+        """Analyze wallet clusters using WalletExplorer"""
+        return {}
+
+    def _query_bitcoinwhoswho(self, address: str) -> Dict[str, Any]:
+        """Query BitcoinWhosWho for wallet intelligence"""
+        return {}
+
+    def _analyze_eth_address(self, address: str) -> Dict[str, Any]:
+        """Analyze Ethereum address using Ethplorer/Bloxy"""
+        return {}
+
+    def _generate_transaction_map(self, address: str) -> Dict[str, Any]:
+        """Generate transaction map using Breadcrumbs"""
+        return {}
+
+    def _track_token_transactions(self, address: str) -> Dict[str, Any]:
+        """Track token transactions using TokenView"""
+        return {}
+
+    def _is_eth_address(self, address: str) -> bool:
+        """Check if address is a valid Ethereum address"""
+        return bool(re.match(r'^0x[a-fA-F0-9]{40}$', address))

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Scam Detection Assistant</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="auth.js"></script>
     <style>
         /* Additional styles specific to the chatbot interface */
         .chat-container {
@@ -116,27 +115,11 @@
                 <h2>Analysis Results</h2>
                 <div id="osint-results" class="analysis-panel">
                     <h3>OSINT Analysis</h3>
-                    <div id="phone-results" style="display: none;">
-                        <h4>Phone Intelligence</h4>
-                        <ul id="phone-details"></ul>
-                    </div>
-                    <div id="email-results" style="display: none;">
-                        <h4>Email Analysis</h4>
-                        <ul id="email-details"></ul>
-                        <div id="breach-details"></div>
-                    </div>
-                    <div id="domain-results" style="display: none;">
-                        <h4>Domain Reconnaissance</h4>
-                        <ul id="domain-details"></ul>
-                        <div id="security-details"></div>
-                    </div>
-                    <p id="waiting-message">Waiting for target...</p>
+                    <p>Waiting for target...</p>
                 </div>
                 <div id="geo-results" class="analysis-panel">
                     <h3>Geolocation Analysis</h3>
-                    <div id="location-details"></div>
-                    <div id="infrastructure-details"></div>
-                    <p id="geo-waiting">Waiting for target...</p>
+                    <p>Waiting for target...</p>
                 </div>
             </div>
         </div>
@@ -187,14 +170,9 @@
             const target = document.getElementById('target-input').value;
             if (!target) return;
 
-            // Reset display
-            document.getElementById('waiting-message').style.display = 'block';
-            document.getElementById('phone-results').style.display = 'none';
-            document.getElementById('email-results').style.display = 'none';
-            document.getElementById('domain-results').style.display = 'none';
-            document.getElementById('geo-waiting').style.display = 'block';
-            document.getElementById('location-details').innerHTML = '';
-            document.getElementById('infrastructure-details').innerHTML = '';
+            // Display analysis in progress
+            document.getElementById('osint-results').innerHTML = '<h3>OSINT Analysis</h3><p>Analyzing...</p>';
+            document.getElementById('geo-results').innerHTML = '<h3>Geolocation Analysis</h3><p>Tracking...</p>';
 
             try {
                 const response = await fetch('http://localhost:5000/api/scan', {
@@ -204,142 +182,32 @@
                     },
                     body: JSON.stringify({
                         target: target,
-                        type: 'full'
+                        type: 'osint'
                     })
                 });
 
                 const data = await response.json();
-                document.getElementById('waiting-message').style.display = 'none';
                 
-                // Process results based on target type
-                if (data.results.phone) {
-                    displayPhoneResults(data.results.phone);
-                }
-                if (data.results.email) {
-                    displayEmailResults(data.results.email);
-                }
-                if (data.results.domain) {
-                    displayDomainResults(data.results.domain);
-                }
+                // Update results panels
+                document.getElementById('osint-results').innerHTML = `
+                    <h3>OSINT Analysis</h3>
+                    <pre>${JSON.stringify(data.result, null, 2)}</pre>
+                `;
 
-                // Add to input history with detailed findings
+                // Add to input history
                 const historyDiv = document.getElementById('input-history');
                 historyDiv.innerHTML += `
                     <div class="result-item">
                         <strong>Target:</strong> ${target}<br>
-                        <strong>Time:</strong> ${new Date().toLocaleTimeString()}<br>
-                        <strong>Risk Level:</strong> ${getRiskLevel(data.results)}<br>
-                        <strong>Findings:</strong> ${summarizeFindings(data.results)}
+                        <strong>Time:</strong> ${new Date().toLocaleTimeString()}
                     </div>
                 `;
                 historyDiv.scrollTop = historyDiv.scrollHeight;
 
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('waiting-message').textContent = 'Error during analysis';
-                document.getElementById('geo-waiting').textContent = 'Error during analysis';
+                document.getElementById('osint-results').innerHTML = '<h3>OSINT Analysis</h3><p>Error during analysis</p>';
             }
-        }
-
-        function displayPhoneResults(phoneData) {
-            const phoneResults = document.getElementById('phone-results');
-            const phoneDetails = document.getElementById('phone-details');
-            phoneResults.style.display = 'block';
-            
-            phoneDetails.innerHTML = `
-                <li>Carrier: ${phoneData.carrier || 'Unknown'}</li>
-                <li>Location: ${phoneData.location || 'Unknown'}</li>
-                <li>Type: ${phoneData.type || 'Unknown'}</li>
-                ${phoneData.reputation ? `<li>Reputation: ${phoneData.reputation}</li>` : ''}
-                ${phoneData.web_mentions ? `<li>Web Mentions: ${phoneData.web_mentions.length} found</li>` : ''}
-            `;
-
-            // Update geolocation panel
-            if (phoneData.location) {
-                document.getElementById('geo-waiting').style.display = 'none';
-                document.getElementById('location-details').innerHTML = `
-                    <h4>Phone Location</h4>
-                    <p>${phoneData.location}</p>
-                `;
-            }
-        }
-
-        function displayEmailResults(emailData) {
-            const emailResults = document.getElementById('email-results');
-            const emailDetails = document.getElementById('email-details');
-            const breachDetails = document.getElementById('breach-details');
-            emailResults.style.display = 'block';
-            
-            emailDetails.innerHTML = `
-                <li>Domain: ${emailData.domain || 'Unknown'}</li>
-                <li>Valid Format: ${emailData.valid_format ? 'Yes' : 'No'}</li>
-                ${emailData.verification ? `<li>Verification: ${emailData.verification}</li>` : ''}
-            `;
-
-            if (emailData.breaches && emailData.breaches.length > 0) {
-                breachDetails.innerHTML = `
-                    <h4>Data Breaches</h4>
-                    <ul>
-                        ${emailData.breaches.map(breach => `<li>${breach.Name}: ${breach.BreachDate}</li>`).join('')}
-                    </ul>
-                `;
-            }
-
-            if (emailData.social_profiles) {
-                document.getElementById('geo-waiting').style.display = 'none';
-                document.getElementById('location-details').innerHTML = `
-                    <h4>Social Profiles</h4>
-                    <pre>${JSON.stringify(emailData.social_profiles, null, 2)}</pre>
-                `;
-            }
-        }
-
-        function displayDomainResults(domainData) {
-            const domainResults = document.getElementById('domain-results');
-            const domainDetails = document.getElementById('domain-details');
-            const securityDetails = document.getElementById('security-details');
-            domainResults.style.display = 'block';
-            
-            domainDetails.innerHTML = `
-                <li>Registration: ${domainData.whois?.creation_date || 'Unknown'}</li>
-                <li>Registrar: ${domainData.whois?.registrar || 'Unknown'}</li>
-                <li>Name Servers: ${domainData.whois?.name_servers?.join(', ') || 'Unknown'}</li>
-            `;
-
-            if (domainData.security_info) {
-                securityDetails.innerHTML = `
-                    <h4>Security Analysis</h4>
-                    <pre>${JSON.stringify(domainData.security_info, null, 2)}</pre>
-                `;
-            }
-
-            if (domainData.infrastructure) {
-                document.getElementById('geo-waiting').style.display = 'none';
-                document.getElementById('infrastructure-details').innerHTML = `
-                    <h4>Infrastructure Details</h4>
-                    <pre>${JSON.stringify(domainData.infrastructure, null, 2)}</pre>
-                `;
-            }
-        }
-
-        function getRiskLevel(results) {
-            // Calculate risk level based on findings
-            let riskScore = 0;
-            if (results.phone?.reputation === 'suspicious') riskScore += 2;
-            if (results.email?.breaches?.length > 0) riskScore += results.email.breaches.length;
-            if (results.domain?.security_info?.malicious_flags > 0) riskScore += 3;
-            
-            if (riskScore > 5) return 'High';
-            if (riskScore > 2) return 'Medium';
-            return 'Low';
-        }
-
-        function summarizeFindings(results) {
-            const findings = [];
-            if (results.phone) findings.push('Phone intelligence gathered');
-            if (results.email?.breaches) findings.push(`Found in ${results.email.breaches.length} data breaches`);
-            if (results.domain?.security_info) findings.push('Domain security analyzed');
-            return findings.join(', ') || 'No significant findings';
         }
 
         // Handle Enter key in input

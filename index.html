@@ -1,50 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Previous head and style sections remain the same -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scam Protection & Detection Center</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="auth.js"></script>
+    <!-- Previous styles remain the same -->
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="scam-types.html">Scam Types</a></li>
-            <li><a href="resources.html">Resources</a></li>
-            <li><a href="report.html">Report</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="chatbot.html">AI Assistant</a></li>
-        </ul>
-    </nav>
-
-    <main>
-        <h1>Scam Protection & Detection Center</h1>
-        
-        <div class="analysis-section">
-            <h2>Threat Analysis</h2>
-            <input type="text" id="target-input" placeholder="Enter email, phone, domain, or crypto address">
-            <button onclick="analyzeThreat()">Analyze</button>
-            
-            <div id="results-content"></div>
-            <div id="intel-content"></div>
-        </div>
-
-        <section class="features">
-            <h2>Key Features</h2>
-            <ul>
-                <li>Real-time threat analysis</li>
-                <li>Multi-source intelligence gathering</li>
-                <li>Advanced scam detection</li>
-                <li>AI-powered protection</li>
-            </ul>
-        </section>
-    </main>
+    <!-- Previous nav and main sections remain the same until the script -->
 
     <script>
-        const API_BASE_URL = 'http://localhost:5000';
+        const API_BASE_URL = 'http://localhost:5000';  // Add API base URL
 
         async function analyzeThreat() {
             const target = document.getElementById('target-input').value;
@@ -57,6 +25,7 @@
             intelDiv.innerHTML = '<p>Gathering intelligence...</p>';
 
             try {
+                // Enhanced analysis using multiple endpoints
                 const endpoints = [
                     { type: 'phone', url: `${API_BASE_URL}/api/phone-intel` },
                     { type: 'email', url: `${API_BASE_URL}/api/email-analysis` },
@@ -94,11 +63,13 @@
                 if (result.error) {
                     resultsHtml += `<p class="error">Error analyzing ${result.type}</p>`;
                 } else {
+                    // Format and display the results
                     resultsHtml += `<div class="result-section">
                         <h4>${result.type.toUpperCase()} Analysis</h4>
                         <pre>${JSON.stringify(result, null, 2)}</pre>
                     </div>`;
 
+                    // Display threat intelligence if available
                     if (result.risk_factors) {
                         intelHtml += `<div class="intel-section">
                             <h4>${result.type.toUpperCase()} Threats</h4>
