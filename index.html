@@ -1,135 +1,429 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Previous head and style sections remain the same -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scam Protection & Detection Center</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #00ff00;
+        }
+
+        .matrix-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.9);
+            transition: opacity 1s ease;
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        .matrix-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .disclaimer-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 20, 0, 0.95);
+            padding: 2rem;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            z-index: 2;
+            width: 80%;
+            max-width: 800px;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .disclaimer-content {
+            max-height: 60vh;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid #004400;
+            background: rgba(0, 20, 0, 0.8);
+        }
+
+        .disclaimer-modal h2 {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #00ff00;
+            text-transform: uppercase;
+        }
+
+        .disclaimer-modal p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .initials-section {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-top: 1px solid #004400;
+        }
+
+        .initials-input {
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 0.5rem;
+            width: 100px;
+            margin-right: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .enter-button {
+            background: #004400;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 0.5rem 2rem;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .enter-button:hover {
+            background: #006600;
+        }
+
+        .enter-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .content {
+            display: none;
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            color: #00ff00;
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .show-content {
+            display: block;
+        }
+
+        nav {
+            background: rgba(0, 20, 0, 0.8);
+            padding: 1rem;
+            border-bottom: 1px solid #00ff00;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #00ff00;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid #00ff00;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: #004400;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .target-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .group-card {
+            background: rgba(0, 20, 0, 0.8);
+            padding: 2rem;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+        }
+
+        .scan-interface {
+            background: rgba(0, 20, 0, 0.8);
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid #00ff00;
+        }
+
+        input[type="text"] {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 0.5rem;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: #004400;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 0.5rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #006600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #00ff00;
+            margin-top: 2rem;
+        }
+    </style>
     <link rel="stylesheet" href="styles.css">
-    <!-- Previous styles remain the same -->
+    <script src="auth.js"></script>
 </head>
 <body>
-    <!-- Previous nav and main sections remain the same until the script -->
+    <div id="matrix-overlay" class="matrix-overlay">
+        <canvas id="matrix-canvas" class="matrix-canvas"></canvas>
+    </div>
+
+    <div id="disclaimer-modal" class="disclaimer-modal">
+        <h2>WARNING - Authorized Access Only</h2>
+        <div class="disclaimer-content">
+            <p><strong>NOTICE: This is a protected system intended for authorized use only.</strong></p>
+            
+            <p>By accessing this system, you acknowledge and agree to the following terms:</p>
+
+            <p>1. This website and its tools are intended solely for:</p>
+            <ul>
+                <li>Victims of scams seeking assistance</li>
+                <li>Potential victims seeking preventive information</li>
+                <li>Vulnerable populations requiring protection</li>
+                <li>Authorized law enforcement and security professionals</li>
+            </ul>
+
+            <p>2. PROHIBITED USES:</p>
+            <ul>
+                <li>Any unethical or malicious purposes</li>
+                <li>Unauthorized access or exploitation</li>
+                <li>Reverse engineering of security tools</li>
+                <li>Distribution of protected information</li>
+            </ul>
+
+            <p>3. LEGAL DISCLAIMER:</p>
+            <p>Pursuant to 18 U.S.C. § 1030 and related statutes, unauthorized access or use of this system is strictly prohibited and may result in criminal and civil penalties. Ghoztwoods LLC bears no responsibility for unauthorized or malicious use of this system or its tools.</p>
+
+            <p>4. INDEMNIFICATION:</p>
+            <p>By entering this site, you agree to indemnify and hold harmless Ghoztwoods LLC, its officers, employees, and affiliates from any claims, damages, or expenses arising from your use or misuse of this system.</p>
+
+            <p>5. MONITORING NOTICE:</p>
+            <p>All activities on this system may be monitored, recorded, and subject to audit. Evidence of unauthorized or criminal activity may be provided to law enforcement officials.</p>
+        </div>
+
+        <div class="initials-section">
+            <p>By entering your initials below, you acknowledge that you have read, understood, and agree to these terms:</p>
+            <input type="text" id="initials" class="initials-input" placeholder="Initials" maxlength="3">
+            <button id="enter-button" class="enter-button" disabled>Enter Site</button>
+        </div>
+    </div>
+
+    <div id="content" class="content">
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="scam-types.html">Scam Types</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="report.html">Report</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="chatbot.html">AI Assistant</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section class="hero-section">
+                <h1>Advanced Scam Protection & Detection Center</h1>
+                <p>Protecting seniors, veterans, and vulnerable populations from sophisticated scams</p>
+                <p>Powered by Ghoztwoods LLC and Partner Agencies</p>
+            </section>
+
+            <div class="target-groups">
+                <div class="group-card">
+                    <h2>Senior Citizens</h2>
+                    <p>Learn about common scams targeting seniors:</p>
+                    <ul>
+                        <li>Medicare/Health Insurance Scams</li>
+                        <li>Tech Support Fraud</li>
+                        <li>Grandparent Scams</li>
+                        <li>Investment Schemes</li>
+                    </ul>
+                </div>
+
+                <div class="group-card">
+                    <h2>Veterans</h2>
+                    <p>Protection against veteran-specific scams:</p>
+                    <ul>
+                        <li>VA Benefit Scams</li>
+                        <li>Pension Poaching</li>
+                        <li>Fake Military Charities</li>
+                        <li>Service-Related Schemes</li>
+                    </ul>
+                </div>
+
+                <div class="group-card">
+                    <h2>Vulnerable Populations</h2>
+                    <p>Safeguards against targeted exploitation:</p>
+                    <ul>
+                        <li>Government Impersonation</li>
+                        <li>Romance Scams</li>
+                        <li>Lottery/Sweepstakes Fraud</li>
+                        <li>Identity Theft</li>
+                    </ul>
+                </div>
+            </div>
+
+            <section class="scan-interface">
+                <h2>Scam Detection Tool</h2>
+                <p>Enter any suspicious contact information for immediate analysis:</p>
+                <input type="text" id="target-input" placeholder="Enter phone, email, domain, or crypto address...">
+                <button onclick="analyzeThreat()">Analyze Threat</button>
+                
+                <div id="scan-results"></div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Scam Protection & Detection Center | Powered by Ghoztwoods LLC</p>
+        </footer>
+    </div>
 
     <script>
-        const API_BASE_URL = 'http://localhost:5000';  // Add API base URL
+        // Initialize variables outside DOMContentLoaded to make them accessible
+        let isAnimating = true;
+        let animationFrameId = null;
+        let overlay, canvas, ctx, initialsInput, enterButton, disclaimerModal, content;
 
-        async function analyzeThreat() {
-            const target = document.getElementById('target-input').value;
-            if (!target) return;
+        // Wait for DOM to be fully loaded
+        window.addEventListener('load', function() {
+            // Get DOM elements
+            overlay = document.getElementById('matrix-overlay');
+            canvas = document.getElementById('matrix-canvas');
+            ctx = canvas.getContext('2d');
+            initialsInput = document.getElementById('initials');
+            enterButton = document.getElementById('enter-button');
+            disclaimerModal = document.getElementById('disclaimer-modal');
+            content = document.getElementById('content');
 
-            const resultsDiv = document.getElementById('results-content');
-            const intelDiv = document.getElementById('intel-content');
-
-            resultsDiv.innerHTML = '<p>Analyzing target...</p>';
-            intelDiv.innerHTML = '<p>Gathering intelligence...</p>';
-
-            try {
-                // Enhanced analysis using multiple endpoints
-                const endpoints = [
-                    { type: 'phone', url: `${API_BASE_URL}/api/phone-intel` },
-                    { type: 'email', url: `${API_BASE_URL}/api/email-analysis` },
-                    { type: 'domain', url: `${API_BASE_URL}/api/domain-recon` },
-                    { type: 'crypto', url: `${API_BASE_URL}/api/crypto-investigation` }
-                ];
-
-                const results = await Promise.all(endpoints.map(endpoint => 
-                    fetch(endpoint.url, {
-                        method: 'POST',
-                        headers: { 
-                            'Content-Type': 'application/json',
-                            'Access-Control-Allow-Origin': '*'
-                        },
-                        body: JSON.stringify({ target })
-                    }).then(res => res.json())
-                    .catch(err => ({ type: endpoint.type, error: true }))
-                ));
-
-                displayResults(results);
-            } catch (error) {
-                resultsDiv.innerHTML = '<p class="error">Error during analysis</p>';
-                intelDiv.innerHTML = '<p class="error">Intelligence gathering failed</p>';
+            // Set up canvas
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             }
-        }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
 
-        function displayResults(results) {
-            const resultsDiv = document.getElementById('results-content');
-            const intelDiv = document.getElementById('intel-content');
-
-            let resultsHtml = '<h3>Analysis Results:</h3>';
-            let intelHtml = '<h3>Threat Intelligence:</h3>';
-
-            results.forEach(result => {
-                if (result.error) {
-                    resultsHtml += `<p class="error">Error analyzing ${result.type}</p>`;
-                } else {
-                    // Format and display the results
-                    resultsHtml += `<div class="result-section">
-                        <h4>${result.type.toUpperCase()} Analysis</h4>
-                        <pre>${JSON.stringify(result, null, 2)}</pre>
-                    </div>`;
-
-                    // Display threat intelligence if available
-                    if (result.risk_factors) {
-                        intelHtml += `<div class="intel-section">
-                            <h4>${result.type.toUpperCase()} Threats</h4>
-                            <ul>
-                                ${result.risk_factors.map(risk => `<li>${risk}</li>`).join('')}
-                            </ul>
-                        </div>`;
-                    }
-                }
-            });
-
-            resultsDiv.innerHTML = resultsHtml;
-            intelDiv.innerHTML = intelHtml;
-        }
-
-        // Matrix rain effect
-        function initMatrix(canvas) {
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
-            const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            const nums = '0123456789';
-            const alphabet = katakana + latin + nums;
-
+            // Matrix animation setup
+            const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             const fontSize = 16;
-            const columns = canvas.width/fontSize;
-            const rainDrops = Array(Math.floor(columns)).fill(1);
+            const columns = Math.floor(canvas.width / fontSize);
+            const drops = new Array(columns).fill(1);
 
             function draw() {
+                if (!isAnimating) {
+                    if (animationFrameId) {
+                        cancelAnimationFrame(animationFrameId);
+                        animationFrameId = null;
+                    }
+                    return;
+                }
+
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
                 ctx.fillStyle = '#0F0';
                 ctx.font = fontSize + 'px monospace';
 
-                for(let i = 0; i < rainDrops.length; i++) {
-                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                    ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
-                    
-                    if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975) {
-                        rainDrops[i] = 0;
+                for (let i = 0; i < drops.length; i++) {
+                    const char = chars[Math.floor(Math.random() * chars.length)];
+                    ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
                     }
-                    rainDrops[i]++;
+                    drops[i]++;
                 }
+                animationFrameId = requestAnimationFrame(draw);
             }
 
-            setInterval(draw, 30);
+            // Start animation
+            draw();
+
+            // Handle initials input
+            initialsInput.addEventListener('input', function() {
+                enterButton.disabled = this.value.length < 2;
+            });
+
+            // Handle enter button click
+            enterButton.addEventListener('click', function() {
+                // Stop the animation
+                isAnimating = false;
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+
+                // Hide disclaimer and show content
+                disclaimerModal.style.display = 'none';
+                content.classList.add('show-content');
+
+                // Fade out matrix overlay
+                overlay.classList.add('fade-out');
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 1000);
+            });
+        });
+
+        function analyzeThreat() {
+            const input = document.getElementById('target-input').value;
+            const results = document.getElementById('scan-results');
+            
+            if (!input) {
+                results.innerHTML = '<p style="color: #ff0000;">Please enter a target to analyze</p>';
+                return;
+            }
+
+            results.innerHTML = '<p>Analyzing threat... Please wait.</p>';
+            // Add your threat analysis logic here
         }
-
-        // Initialize matrix effect
-        const canvas = document.createElement('canvas');
-        canvas.classList.add('matrix-effect');
-        document.body.appendChild(canvas);
-        initMatrix(canvas);
     </script>
-
-    <footer>
-        <p>&copy; 2024 Scam Protection & Detection Center | Powered by Ghoztwoods LLC</p>
-    </footer>
 </body>
 </html>
