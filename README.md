@@ -1,37 +1,44 @@
-# Scam Prevention & Protection Website
+# Scam Protection & Detection Center
 
-A comprehensive website with an integrated S.O.G (Scammer Operations Group) chatbot that helps users identify and protect themselves from various types of scams.
+A secure web platform designed to protect seniors, veterans, and vulnerable populations from sophisticated scams. Built with advanced security features and OSINT capabilities.
 
 ## Features
 
-- Interactive S.O.G Chatbot with OSINT capabilities
-- Real-time scam analysis tools
-- Public database integrations for:
-  - Phone number verification
-  - Email security checks
-  - Domain safety analysis
-  - Cryptocurrency wallet investigation
-- Educational resources about common scams
-- Scam reporting system
+- Matrix-themed security interface
+- Legal disclaimer and user agreement system
+- Information on common scams targeting:
+  - Senior Citizens
+  - Veterans
+  - Vulnerable Populations
+- Real-time threat analysis tools
+- Secure access controls
 
-## Tools & Technologies
+## Setup
 
-- HTML5
-- CSS3
-- JavaScript
-- OSINT Integration
-- Responsive Design
+1. The site is hosted at https://Ghozta1320.github.io
+2. Repository Settings > Pages:
+   - Source: Deploy from a branch
+   - Branch: master
+   - Folder: /docs
 
-## Getting Started
+## Security
 
+This system includes:
+- Legal disclaimers
+- Terms of use agreement
+- User acknowledgment system
+- Protected by 18 U.S.C. § 1030
+
+## Development
+
+To run locally:
 1. Clone the repository
-2. Open index.html in your browser
-3. Start interacting with the S.O.G chatbot
+2. Open docs/index.html in a browser
+3. For API features, run the Flask server:
+   ```bash
+   python api.py
+   ```
 
-## Deployment
+## License
 
-This website is hosted using GitHub Pages. Visit [your-username.github.io/repository-name] to see it live.
-
-## Author
-
-Created by Avery Delpit for CTI110
+Protected by Ghoztwoods LLC. Unauthorized use prohibited.

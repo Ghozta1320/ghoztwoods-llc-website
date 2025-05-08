@@ -3,105 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Resources - Scam Prevention & Protection</title>
+    <title>Resources - Scam Protection & Detection Center</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="auth.js"></script>
+    <style>
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .resource-card {
+            background: rgba(0, 51, 0, 0.3);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 5px;
+        }
+
+        .partner-agencies {
+            margin-top: 2rem;
+        }
+
+        .agency-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .agency-card {
+            background: rgba(0, 51, 0, 0.2);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .video-section {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(0, 51, 0, 0.3);
+            border: 1px solid var(--border-color);
+        }
+    </style>
 </head>
 <body>
     <nav>
         <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="scam-types.html">Common Scams</a></li>
-            <li><a href="resources.html">Help Resources</a></li>
-            <li><a href="report.html">Report a Scam</a></li>
-            <li><a href="about.html">About Us</a></li>
+            <li><a href="scam-types.html">Scam Types</a></li>
+            <li><a href="resources.html">Resources</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About</a></li>
         </ul>
     </nav>
 
     <main>
-        <h1>Available Resources and Support</h1>
+        <h1>Protection Resources & Partner Agencies</h1>
 
-        <section class="resource-section">
-            <h2>Primary Support Organizations</h2>
-            
-            <div class="resource-card primary">
-                <h3>Ghoztwoods LLC</h3>
-                <p>Leading the fight against cyber scams and fraud</p>
-                <ul>
-                    <li>24/7 Scam Prevention Hotline</li>
-                    <li>Cybersecurity Consulting</li>
-                    <li>Victim Support Services</li>
-                    <li>Educational Resources</li>
-                </ul>
-                <a href="#" class="contact-button">Contact Now</a>
+        <section class="video-section">
+            <h2>How to Protect Yourself from Scams</h2>
+            <div class="video-container">
+                <iframe width="560" height="315" 
+                    src="https://www.youtube.com/embed/K4YvUuTYC1A" 
+                    title="Scam Protection Guide" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
             </div>
         </section>
 
-        <section class="resource-section">
-            <h2>Partner Agencies</h2>
+        <section class="partner-agencies">
+            <h2>Partner Agencies & Support Organizations</h2>
             
-            <div class="resource-grid">
-                <div class="resource-card">
+            <div class="agency-list">
+                <div class="agency-card">
+                    <h3>Ghoztwoods LLC</h3>
+                    <p>Leading cybersecurity and scam prevention services</p>
+                    <ul>
+                        <li>24/7 Scam Detection</li>
+                        <li>Victim Support Services</li>
+                        <li>Educational Resources</li>
+                    </ul>
+                    <a href="#" class="learn-more">Learn More →</a>
+                </div>
+
+                <div class="agency-card">
                     <h3>Federal Trade Commission (FTC)</h3>
-                    <p>Report scams and get consumer protection information</p>
-                    <a href="https://www.ftc.gov" target="_blank">Visit Website</a>
+                    <p>Consumer protection and fraud prevention</p>
+                    <ul>
+                        <li>Scam Reporting</li>
+                        <li>Consumer Alerts</li>
+                        <li>Identity Theft Recovery</li>
+                    </ul>
+                    <a href="https://www.ftc.gov" target="_blank">Visit Website →</a>
                 </div>
 
-                <div class="resource-card">
-                    <h3>FBI's Internet Crime Complaint Center (IC3)</h3>
-                    <p>Report cybercrime and internet-enabled fraud</p>
-                    <a href="https://www.ic3.gov" target="_blank">File Complaint</a>
+                <div class="agency-card">
+                    <h3>FBI's IC3</h3>
+                    <p>Internet Crime Complaint Center</p>
+                    <ul>
+                        <li>Cybercrime Reporting</li>
+                        <li>Fraud Alerts</li>
+                        <li>Investigation Support</li>
+                    </ul>
+                    <a href="https://www.ic3.gov" target="_blank">File Report →</a>
                 </div>
 
-                <div class="resource-card">
+                <div class="agency-card">
                     <h3>AARP Fraud Watch Network</h3>
-                    <p>Resources specifically for seniors</p>
-                    <a href="https://www.aarp.org/money/scams-fraud/" target="_blank">Learn More</a>
-                </div>
-
-                <div class="resource-card">
-                    <h3>Veterans Affairs Scam Protection</h3>
-                    <p>Resources for veterans targeted by scammers</p>
-                    <a href="https://www.va.gov" target="_blank">Get Help</a>
+                    <p>Senior-focused fraud prevention</p>
+                    <ul>
+                        <li>Scam Updates</li>
+                        <li>Fraud Helpline</li>
+                        <li>Educational Programs</li>
+                    </ul>
+                    <a href="https://www.aarp.org/money/scams-fraud/" target="_blank">Get Help →</a>
                 </div>
             </div>
         </section>
 
-        <section class="emergency-resources">
+        <section class="resources-grid">
+            <div class="resource-card">
+                <h3>For Senior Citizens</h3>
+                <ul>
+                    <li>National Elder Fraud Hotline: 833-FRAUD-11</li>
+                    <li>Senior Medicare Patrol</li>
+                    <li>Elder Justice Initiative</li>
+                    <li>Local Area Agency on Aging</li>
+                </ul>
+            </div>
+
+            <div class="resource-card">
+                <h3>For Veterans</h3>
+                <ul>
+                    <li>VA Office of Inspector General</li>
+                    <li>Veterans Crisis Line</li>
+                    <li>Military Consumer Protection Office</li>
+                    <li>Veterans Benefits Administration</li>
+                </ul>
+            </div>
+
+            <div class="resource-card">
+                <h3>Cryptocurrency Safety</h3>
+                <ul>
+                    <li>Crypto Fraud Reporting Centers</li>
+                    <li>Blockchain Analysis Tools</li>
+                    <li>Wallet Security Guidelines</li>
+                    <li>Transaction Verification Services</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="contact-info">
             <h2>Emergency Contacts</h2>
-            <div class="emergency-grid">
-                <div class="emergency-item">
-                    <h3>Scam Prevention Hotline</h3>
-                    <p>1-800-XXX-XXXX (24/7)</p>
-                </div>
-                <div class="emergency-item">
-                    <h3>Cybercrime Response Unit</h3>
-                    <p>1-888-XXX-XXXX (24/7)</p>
-                </div>
-                <div class="emergency-item">
-                    <h3>Elder Fraud Hotline</h3>
-                    <p>1-833-FRAUD-11</p>
-                </div>
-                <div class="emergency-item">
-                    <h3>Veterans Crisis Line</h3>
-                    <p>1-800-273-8255</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="additional-help">
-            <h2>Additional Resources</h2>
+            <p>If you believe you're currently being scammed:</p>
             <ul>
-                <li>Local Law Enforcement Agencies</li>
-                <li>State Consumer Protection Offices</li>
-                <li>Financial Institution Fraud Departments</li>
-                <li>Identity Theft Resource Center</li>
-                <li>Cryptocurrency Scam Recovery Services</li>
+                <li>Emergency Hotline: 1-800-XXX-XXXX (24/7)</li>
+                <li>Ghoztwoods LLC Support: support@ghoztwoods.com</li>
+                <li>Local Law Enforcement: 911</li>
             </ul>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 Scam Prevention Initiative. Created by Avery Delpit in partnership with Ghoztwoods LLC</p>
+        <p>&copy; 2024 Scam Protection & Detection Center | Powered by Ghoztwoods LLC</p>
     </footer>
 </body>
 </html>
