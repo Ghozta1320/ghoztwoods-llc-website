@@ -1,8 +1,82 @@
 {
-    "whois": "sk_f2f9df69d34d124f1b542a2d45964100",
-    "hibp": "3fdb6956-5e8c-4591-8d7f-1561e5341524",
-    "hunter": "7ce7ec5d5fba4f3d8f7d7eb31244f0c2d8f99b5a",
-    "fullcontact": "sk_f2f9df69d34d124f1b542a2d45964100",
-    "virustotal": "e2513a75f8133a4876045afe355deda6c4d80c3b7c54951d54198b5d12057fd8",
-    "shodan": "PSKINdQe1GyxGgecYz2191H2JoS9qvgD"
+    "THREAT_INTELLIGENCE": {
+        "crowdstrike": "9c1a2b3d4e5f6g7h8i9j0k1l2m3n4o5p",
+        "mandiant": "5p4o3n2m1l0k9j8i7h6g5f4e3d2c1b",
+        "recorded_future": "b1c2d3e4f5g6h7i8j9k0l1m2n3o4p5",
+        "flashpoint": "p5o4n3m2l1k0j9i8h7g6f5e4d3c2b1",
+        "group_ib": "1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6",
+        "kaspersky_ti": "6o5n4m3l2k1j0i9h8g7f6e5d4c3b2a",
+        "fireeye": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p",
+        "intel471": "p5o4n3m2l1k0j9i8h7g6f5e4d3c2b1a"
+    },
+    
+    "DARK_WEB_INTELLIGENCE": {
+        "sixgill": "dc9b8a7f6e5d4c3b2a1f9e8d7c6b5a4",
+        "webhose": "4a5b6c7d8e9f0g1h2i3j4k5l6m7n8o9",
+        "darktracer": "9o8n7m6l5k4j3i2h1g0f9e8d7c6b5a",
+        "darkowl": "5a4b3c2d1e0f9g8h7i6j5k4l3m2n1o",
+        "cybersixgill": "1o2n3m4l5k6j7i8h9g0f1e2d3c4b5a",
+        "flare_systems": "5b4c3d2e1f0g9h8i7j6k5l4m3n2o1p"
+    },
+    
+    "BLOCKCHAIN_ANALYTICS": {
+        "chainalysis": "ch_live_c1d2e3f4g5h6i7j8k9l0m1n2o3p4",
+        "elliptic": "el_prod_a1b2c3d4e5f6g7h8i9j0k1l2m3n4",
+        "ciphertrace": "ct_enterprise_5p4o3n2m1l0k9j8i7h6g5f4",
+        "crystal": "cr_premium_9a8b7c6d5e4f3g2h1i0j9k8l7",
+        "scorechain": "sc_advanced_1m2n3o4p5q6r7s8t9u0v1w2x",
+        "coinfirm": "cf_pro_5x4w3v2u1t0s9r8q7p6o5n4m3l2"
+    },
+    
+    "OSINT_PLATFORMS": {
+        "maltego": "mt_transform_1a2b3c4d5e6f7g8h9i0j1k2l3",
+        "spiderfoot": "sf_enterprise_5l4k3j2i1h0g9f8e7d6c5b4",
+        "intelx": "ix_premium_9m8n7o6p5q4r3s2t1u0v9w8x7",
+        "binaryedge": "be_pro_1x2w3v4u5t6s7r8q9p0o1n2m3l",
+        "censys": "cs_advanced_5a4b3c2d1e0f9g8h7i6j5k4l3",
+        "shodan": "sh_enterprise_9l8k7j6h5g4f3d2s1a0p9o8i"
+    },
+    
+    "FINANCIAL_INTELLIGENCE": {
+        "refinitiv": "rt_eikon_1a2b3c4d5e6f7g8h9i0j1k2l3m",
+        "lexisnexis": "ln_bridger_5m4l3k2j1i0h9g8f7e6d5c4b",
+        "dow_jones": "dj_factiva_9c8b7a6f5e4d3c2b1a0z9y8x7",
+        "thomson_reuters": "tr_premium_1x2w3v4u5t6s7r8q9p0o1n2m"
+    },
+    
+    "CYBER_INTELLIGENCE": {
+        "virustotal": "vt_enterprise_1a2b3c4d5e6f7g8h9i0j1k2l3",
+        "alienvault": "av_premium_5l4k3j2i1h0g9f8e7d6c5b4a",
+        "riskiq": "rq_enterprise_9a8b7c6d5e4f3g2h1i0j9k8l7",
+        "domaintools": "dt_iris_1m2n3o4p5q6r7s8t9u0v1w2x3y",
+        "securitytrails": "st_enterprise_5y4x3w2v1u0t9s8r7q6p5o4"
+    },
+    
+    "ADVANCED_SEARCH": {
+        "pipl": "pp_enterprise_1a2b3c4d5e6f7g8h9i0j1k2l3",
+        "skopenow": "sk_premium_5l4k3j2i1h0g9f8e7d6c5b4a",
+        "spokeo": "sp_pro_9a8b7c6d5e4f3g2h1i0j9k8l7m6",
+        "truthfinder": "tf_advanced_1m2n3o4p5q6r7s8t9u0v1w2x"
+    },
+    
+    "COMMUNICATION_INTELLIGENCE": {
+        "twilio": "tw_enterprise_1a2b3c4d5e6f7g8h9i0j1k2l3",
+        "nexmo": "nx_premium_5l4k3j2i1h0g9f8e7d6c5b4a",
+        "messagebird": "mb_pro_9a8b7c6d5e4f3g2h1i0j9k8l7m6",
+        "sinch": "si_advanced_1m2n3o4p5q6r7s8t9u0v1w2x3"
+    },
+    
+    "SOCIAL_INTELLIGENCE": {
+        "brandwatch": "bw_enterprise_1a2b3c4d5e6f7g8h9i0j1k2l",
+        "meltwater": "mw_premium_5l4k3j2i1h0g9f8e7d6c5b4a",
+        "sprinklr": "sr_pro_9a8b7c6d5e4f3g2h1i0j9k8l7m6",
+        "synthesio": "sy_advanced_1m2n3o4p5q6r7s8t9u0v1w2x"
+    },
+    
+    "GEOSPATIAL_INTELLIGENCE": {
+        "maxar": "mx_enterprise_1a2b3c4d5e6f7g8h9i0j1k2l3",
+        "planet": "pl_premium_5l4k3j2i1h0g9f8e7d6c5b4a",
+        "airbus": "ab_pro_9a8b7c6d5e4f3g2h1i0j9k8l7m6",
+        "nearmap": "nm_advanced_1m2n3o4p5q6r7s8t9u0v1w2x"
+    }
 }

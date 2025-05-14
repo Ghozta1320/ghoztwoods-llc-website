@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
 from osint_scanner import OSINTScanner
+from audio_processing import AudioAnalyzer
+from geo_tracker import GeoTracker
 from datetime import datetime
 import json
 import os
@@ -29,11 +31,92 @@ def save_scan_result(scan_type: str, target: str, result: Dict[str, Any]):
     with open(filename, 'w') as f:
         json.dump(data, f, indent=2)
 
+@app.route('/api/audio-analysis', methods=['POST'])
+def analyze_audio():
+    """Handle audio analysis requests"""
+    if 'audio' not in request.files:
+        return jsonify({"error": "No audio file provided"}), 400
+        
+    try:
+        audio_file = request.files['audio']
+        analyzer = AudioAnalyzer()
+        results = analyzer.analyze_audio(audio_file)
+        
+        return jsonify({
+            "status": "success",
+            "result": results
+        })
+    except Exception as e:
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"Error in scan endpoint: {error_trace}")
+        return jsonify({
+            "status": "error",
+            "error": str(e),
+            "trace": error_trace
+        }), 500
+
+@app.route('/api/sigint', methods=['POST'])
+def analyze_signals():
+    """Handle SIGINT analysis requests"""
+    data = request.json
+    target = data.get('target')
+    
+    if not target:
+        return jsonify({"error": "No target provided"}), 400
+        
+    try:
+        # Initialize signal analysis
+        results = {
+            "signal_strength": [],
+            "frequency_analysis": {},
+            "transmission_patterns": [],
+            "anomalies": []
+        }
+        
+        # Add signal analysis logic here
+        # This is a placeholder for actual SIGINT capabilities
+        
+        return jsonify({
+            "status": "success",
+            "result": results
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "error": str(e)
+        }), 500
+
+@app.route('/api/geo-track', methods=['POST'])
+def track_location():
+    """Handle geolocation tracking requests"""
+    data = request.json
+    target = data.get('target')
+    
+    if not target:
+        return jsonify({"error": "No target provided"}), 400
+        
+    try:
+        tracker = GeoTracker()
+        results = tracker.track_location(target)
+        
+        return jsonify({
+            "status": "success",
+            "result": results
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "error": str(e)
+        }), 500
+
 @app.route('/api/scan', methods=['POST'])
 def scan():
     data = request.json
     target = data.get('target')
     scan_type = data.get('type', 'all')
+
+    print(f"Scan request received. Target: {target}, Type: {scan_type}")
 
     if not target:
         return jsonify({"error": "No target provided"}), 400
@@ -63,9 +146,13 @@ def scan():
         })
 
     except Exception as e:
+        import traceback
+        error_trace = traceback.format_exc()
+        print(f"Error in scan endpoint: {error_trace}")
         return jsonify({
             "status": "error",
-            "error": str(e)
+            "error": str(e),
+            "trace": error_trace
         }), 500
 
 @app.route('/api/submit-tip', methods=['POST'])

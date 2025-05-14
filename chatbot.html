@@ -121,6 +121,16 @@
                     <h3>Geolocation Analysis</h3>
                     <p>Waiting for target...</p>
                 </div>
+                <div id="audio-results" class="analysis-panel">
+                    <h3>Audio Analysis</h3>
+                    <button id="start-recording" class="scan-button">Start Recording</button>
+                    <button id="stop-recording" class="scan-button" disabled>Stop Recording</button>
+                    <p id="audio-status">Ready for voice analysis...</p>
+                </div>
+                <div id="sigint-results" class="analysis-panel">
+                    <h3>SIGINT Analysis</h3>
+                    <p>Signal intelligence data will appear here...</p>
+                </div>
             </div>
         </div>
     </main>
@@ -166,6 +176,69 @@
         setInterval(draw, 30);
 
         // Chatbot functionality
+        let isRecording = false;
+        let mediaRecorder;
+        let audioChunks = [];
+
+        // Audio recording functions
+        async function setupAudioRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    await analyzeAudio(audioBlob);
+                };
+            } catch (err) {
+                console.error('Error accessing microphone:', err);
+            }
+        }
+
+        document.getElementById('start-recording').addEventListener('click', () => {
+            audioChunks = [];
+            mediaRecorder.start();
+            isRecording = true;
+            document.getElementById('start-recording').disabled = true;
+            document.getElementById('stop-recording').disabled = false;
+            document.getElementById('audio-status').textContent = 'Recording...';
+        });
+
+        document.getElementById('stop-recording').addEventListener('click', () => {
+            mediaRecorder.stop();
+            isRecording = false;
+            document.getElementById('start-recording').disabled = false;
+            document.getElementById('stop-recording').disabled = true;
+            document.getElementById('audio-status').textContent = 'Processing audio...';
+        });
+
+        async function analyzeAudio(audioBlob) {
+            const formData = new FormData();
+            formData.append('audio', audioBlob);
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/audio-analysis', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                document.getElementById('audio-results').innerHTML = `
+                    <h3>Audio Analysis</h3>
+                    <button id="start-recording" class="scan-button">Start Recording</button>
+                    <button id="stop-recording" class="scan-button" disabled>Stop Recording</button>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('Error analyzing audio:', error);
+                document.getElementById('audio-status').textContent = 'Error analyzing audio';
+            }
+        }
+
         async function analyzeThreat() {
             const target = document.getElementById('target-input').value;
             if (!target) return;
@@ -173,25 +246,52 @@
             // Display analysis in progress
             document.getElementById('osint-results').innerHTML = '<h3>OSINT Analysis</h3><p>Analyzing...</p>';
             document.getElementById('geo-results').innerHTML = '<h3>Geolocation Analysis</h3><p>Tracking...</p>';
+            document.getElementById('sigint-results').innerHTML = '<h3>SIGINT Analysis</h3><p>Analyzing signals...</p>';
 
             try {
-                const response = await fetch('http://localhost:5000/api/scan', {
+                // Threat Analysis
+                const threatResponse = await fetch('/api/scan/threat', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target: target })
+                });
+                const threatData = await threatResponse.json();
+
+                // Deep Scan Analysis
+                const deepScanResponse = await fetch('/api/deep-scan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
                         target: target,
-                        type: 'osint'
+                        scan_types: ['phone', 'email', 'domain', 'breach', 'threat', 'social']
                     })
                 });
-
-                const data = await response.json();
+                const deepScanData = await deepScanResponse.json();
                 
-                // Update results panels
+                // Update results panels with threat and deep scan data
                 document.getElementById('osint-results').innerHTML = `
-                    <h3>OSINT Analysis</h3>
-                    <pre>${JSON.stringify(data.result, null, 2)}</pre>
+                    <h3>Threat Analysis</h3>
+                    <pre>${JSON.stringify(threatData, null, 2)}</pre>
+                `;
+
+                document.getElementById('geo-results').innerHTML = `
+                    <h3>Deep Scan Results</h3>
+                    <pre>${JSON.stringify(deepScanData.results, null, 2)}</pre>
+                `;
+
+                document.getElementById('sigint-results').innerHTML = `
+                    <h3>Scan Summary</h3>
+                    <div class="result-item">
+                        <strong>Threat Level:</strong> ${threatData.threatLevel}<br>
+                        <strong>Risk Score:</strong> ${deepScanData.riskScore}<br>
+                        <strong>Findings:</strong> ${deepScanData.findings.length} potential issues found
+                    </div>
+                    <div class="result-item">
+                        <strong>Recommendations:</strong>
+                        <ul>
+                            ${deepScanData.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                        </ul>
+                    </div>
                 `;
 
                 // Add to input history
@@ -215,6 +315,12 @@
             if (e.key === 'Enter') {
                 analyzeThreat();
             }
+        });
+
+        // Initialize audio recording setup when page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            await setupAudioRecording();
+            console.log('Audio recording setup initialized');
         });
     </script>
 
