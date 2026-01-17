@@ -1,0 +1,16 @@
+{
+  "timestamp": "20250512_123954",
+  "target": "CUTIE32",
+  "type": "osint",
+  "result": {
+    "phone": {
+      "carrier_info": {},
+      "location_data": {},
+      "reputation": {},
+      "social_media": [],
+      "data_breaches": [],
+      "risk_factors": [],
+      "error": "(0) Missing or invalid default region."
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "timestamp": "20250512_123840",
+  "target": "+1-910-429-4456",
+  "type": "osint",
+  "result": {
+    "phone": {
+      "carrier_info": {
+        "carrier": "",
+        "valid": true,
+        "type": 2,
+        "region": "Fayetteville, NC",
+        "timezones": [
+          "America/New_York"
+        ]
+      },
+      "location_data": {},
+      "reputation": {},
+      "social_media": [],
+      "data_breaches": [],
+      "risk_factors": [],
+      "risk_score": 0.0
+    }
+  }
+}

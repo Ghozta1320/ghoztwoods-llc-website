@@ -1,0 +1,20 @@
+{
+  "timestamp": "20250512_123929",
+  "target": "GOOGLE@GMAIL.COM",
+  "type": "osint",
+  "result": {
+    "email": {
+      "validation": {
+        "valid": true
+      },
+      "breaches": [],
+      "social_profiles": [],
+      "domain_info": {},
+      "risk_factors": [
+        "No legitimate social media presence found"
+      ],
+      "pattern_analysis": {},
+      "risk_score": 0.1
+    }
+  }
+}

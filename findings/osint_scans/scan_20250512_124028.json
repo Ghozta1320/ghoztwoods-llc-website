@@ -1,0 +1,17 @@
+{
+  "timestamp": "20250512_124028",
+  "target": "192.168.1.0",
+  "type": "osint",
+  "result": {
+    "crypto": {
+      "transaction_history": {},
+      "wallet_analysis": {},
+      "cluster_info": {},
+      "risk_assessment": {},
+      "risk_factors": [],
+      "transaction_map": {},
+      "token_transactions": {},
+      "risk_score": 0.0
+    }
+  }
+}
