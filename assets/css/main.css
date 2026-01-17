@@ -1,0 +1,663 @@
+/* ============================================
+   GHOZTWOODS LLC - MAIN STYLESHEET
+   Colors: Green (#00ff00) + Blue (#00d4ff)
+   Theme: Cybersecurity / Matrix / Terminal
+   ============================================ */
+
+:root {
+    /* Primary Colors */
+    --ghozt-green: #00ff00;
+    --ghozt-blue: #00d4ff;
+    --ghozt-black: #0a0a0a;
+    --ghozt-dark: #121212;
+    --ghozt-panel: #1e1e1e;
+    
+    /* Accent Colors */
+    --ghozt-green-dim: rgba(0, 255, 0, 0.1);
+    --ghozt-blue-dim: rgba(0, 212, 255, 0.1);
+    --ghozt-green-glow: rgba(0, 255, 0, 0.5);
+    --ghozt-blue-glow: rgba(0, 212, 255, 0.5);
+    
+    /* Text Colors */
+    --text-primary: #e5e5e5;
+    --text-secondary: #888888;
+    --text-muted: #666666;
+    
+    /* Fonts */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 4rem;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--ghozt-black);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Selection */
+::selection {
+    background-color: var(--ghozt-green);
+    color: var(--ghozt-black);
+}
+
+::-moz-selection {
+    background-color: var(--ghozt-green);
+    color: var(--ghozt-black);
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+}
+
+h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h4 {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    color: var(--ghozt-green);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--ghozt-blue);
+}
+
+code, pre {
+    font-family: var(--font-mono);
+    background-color: var(--ghozt-panel);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+}
+
+/* ============================================
+   GLOW EFFECTS
+   ============================================ */
+
+.glow-green {
+    text-shadow: 0 0 10px var(--ghozt-green-glow),
+                 0 0 20px var(--ghozt-green-glow),
+                 0 0 30px var(--ghozt-green-glow);
+}
+
+.glow-blue {
+    text-shadow: 0 0 10px var(--ghozt-blue-glow),
+                 0 0 20px var(--ghozt-blue-glow),
+                 0 0 30px var(--ghozt-blue-glow);
+}
+
+.glow-dual {
+    text-shadow: 0 0 10px var(--ghozt-green-glow),
+                 0 0 20px var(--ghozt-blue-glow),
+                 0 0 30px var(--ghozt-green-glow);
+}
+
+.box-glow-green {
+    box-shadow: 0 0 20px var(--ghozt-green-glow),
+                0 0 40px rgba(0, 255, 0, 0.2);
+}
+
+.box-glow-blue {
+    box-shadow: 0 0 20px var(--ghozt-blue-glow),
+                0 0 40px rgba(0, 212, 255, 0.2);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--ghozt-green);
+    color: var(--ghozt-black);
+    border-color: var(--ghozt-green);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--ghozt-green);
+    box-shadow: 0 0 20px var(--ghozt-green-glow);
+}
+
+.btn-secondary {
+    background-color: var(--ghozt-blue);
+    color: var(--ghozt-black);
+    border-color: var(--ghozt-blue);
+}
+
+.btn-secondary:hover {
+    background-color: transparent;
+    color: var(--ghozt-blue);
+    box-shadow: 0 0 20px var(--ghozt-blue-glow);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--ghozt-green);
+    border-color: var(--ghozt-green);
+}
+
+.btn-outline:hover {
+    background-color: var(--ghozt-green);
+    color: var(--ghozt-black);
+    box-shadow: 0 0 20px var(--ghozt-green-glow);
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+.card {
+    background-color: var(--ghozt-panel);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-normal);
+}
+
+.card:hover {
+    border-color: var(--ghozt-green);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 255, 0, 0.2);
+}
+
+.card-blue:hover {
+    border-color: var(--ghozt-blue);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+/* ============================================
+   GRID BACKGROUND
+   ============================================ */
+
+.grid-background {
+    position: relative;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+.grid-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, var(--ghozt-black) 100%);
+    pointer-events: none;
+}
+
+/* ============================================
+   SCANLINE EFFECT
+   ============================================ */
+
+.scanline {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 255, 65, 0.02) 50%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    opacity: 0.1;
+    animation: scanline 10s linear infinite;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+@keyframes scanline {
+    0% { top: -100px; }
+    100% { top: 100%; }
+}
+
+/* ============================================
+   MATRIX RAIN EFFECT
+   ============================================ */
+
+.matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.05;
+}
+
+/* ============================================
+   NAVIGATION
+   ============================================ */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--ghozt-panel);
+    transition: all var(--transition-normal);
+}
+
+.navbar.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 255, 0, 0.1);
+}
+
+.nav-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+}
+
+.nav-logo span {
+    color: var(--ghozt-green);
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: var(--ghozt-green);
+}
+
+.nav-link.active {
+    color: var(--ghozt-green);
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 2rem 4rem;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--ghozt-green-dim);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    border-radius: 50px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--ghozt-green);
+    margin-bottom: 2rem;
+}
+
+.hero-badge .pulse {
+    width: 8px;
+    height: 8px;
+    background-color: var(--ghozt-green);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.hero-title {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.hero-title .gradient-text {
+    background: linear-gradient(135deg, var(--ghozt-green) 0%, var(--ghozt-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 2rem;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+
+.section {
+    padding: 6rem 2rem;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-label {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--ghozt-green);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   STATS BAR
+   ============================================ */
+
+.stats-bar {
+    background-color: var(--ghozt-dark);
+    border-top: 1px solid var(--ghozt-panel);
+    border-bottom: 1px solid var(--ghozt-panel);
+    padding: 3rem 2rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    text-align: center;
+}
+
+.stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+    background-color: var(--ghozt-dark);
+    border-top: 1px solid var(--ghozt-panel);
+    padding: 4rem 2rem 2rem;
+}
+
+.footer-content {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-section h3 {
+    font-size: 1.125rem;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+    color: var(--ghozt-green);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--ghozt-panel);
+    padding-top: 2rem;
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .hero {
+        padding: 4rem 1rem 2rem;
+    }
+    
+    .section {
+        padding: 4rem 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-1 { margin-top: var(--spacing-sm); }
+.mt-2 { margin-top: var(--spacing-md); }
+.mt-3 { margin-top: var(--spacing-lg); }
+.mt-4 { margin-top: var(--spacing-xl); }
+
+.mb-1 { margin-bottom: var(--spacing-sm); }
+.mb-2 { margin-bottom: var(--spacing-md); }
+.mb-3 { margin-bottom: var(--spacing-lg); }
+.mb-4 { margin-bottom: var(--spacing-xl); }
+
+.hidden { display: none; }
+.visible { display: block; }
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.slide-in-right {
+    animation: slideInRight 0.6s ease-out;
+}

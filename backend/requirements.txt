@@ -1,0 +1,52 @@
+# GHOZTWOODS LLC Backend Requirements
+# Python dependencies for the website backend
+
+# Web Framework
+Flask==3.0.0
+Flask-CORS==4.0.0
+
+# Geolocation & Mapping
+geoip2==4.7.0
+geopy==2.4.1
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.2
+
+# Machine Learning
+scikit-learn==1.3.2
+
+# HTTP Requests
+requests==2.31.0
+
+# Date/Time Handling
+python-dateutil==2.8.2
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# API Rate Limiting
+Flask-Limiter==3.5.0
+
+# Database (if needed)
+# SQLAlchemy==2.0.23
+
+# Security
+cryptography==41.0.7
+
+# Async Support
+aiohttp==3.9.1
+
+# JSON Web Tokens (if needed for auth)
+# PyJWT==2.8.0
+
+# Testing
+pytest==7.4.3
+pytest-flask==1.3.0
+
+# Code Quality
+black==23.12.1
+flake8==6.1.0
+
+# Documentation
+# Sphinx==7.2.6

@@ -5,6 +5,8 @@ __pycache__/
 *.so
 .Python
 env/
+venv/
+ENV/
 build/
 develop-eggs/
 dist/
@@ -16,27 +18,55 @@ lib64/
 parts/
 sdist/
 var/
+wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 
-# Virtual Environment
+# API Keys and Secrets
+config/api_keys.json
 .env
-.venv
-venv/
-ENV/
+*.key
+*.pem
 
 # IDE
-.idea/
 .vscode/
+.idea/
 *.swp
 *.swo
+*~
 
-# Operating System
+# OS
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Project specific
-findings/
+# Logs
 *.log
+logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Node modules (if using any JS build tools)
 node_modules/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# GeoIP Database (large file)
+data/GeoLite2-City.mmdb
+
+# Backup files
+*.bak
+*.backup
+*~

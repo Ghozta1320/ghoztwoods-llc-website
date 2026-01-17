@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your GHOZTWOODS technician in real-time. Better than Uber or DoorDash - see credentials, ETA, and service status.">
+    <title>Technician Tracker | GHOZTWOODS LLC</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/tracker.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i data-lucide="ghost" style="width: 32px; height: 32px;"></i>
+                <span>GHOZTWOODS<span>_LLC</span></span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html#mission" class="nav-link">./MISSION</a></li>
+                <li><a href="index.html#services" class="nav-link">./SERVICES</a></li>
+                <li><a href="technician-tracker.html" class="nav-link active">./TRACK_TECH</a></li>
+                <li><a href="scam-detection.html" class="nav-link">./SCAM_INTEL</a></li>
+                <li><a href="index.html#contact" class="nav-link">./CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Tracker Interface -->
+    <div class="tracker-container">
+        <!-- Sidebar -->
+        <div class="tracker-sidebar">
+            <!-- Header -->
+            <div class="sidebar-header">
+                <h1 class="glow-green">TECHNICIAN TRACKER</h1>
+                <p style="color: #888; font-size: 0.875rem; margin-top: 0.5rem;">Real-time location & service status</p>
+            </div>
+
+            <!-- Service ID Input -->
+            <div class="service-lookup">
+                <label for="service-id" style="display: block; color: var(--ghozt-green); font-family: var(--font-mono); font-size: 0.875rem; margin-bottom: 0.5rem;">SERVICE ID</label>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input 
+                        type="text" 
+                        id="service-id" 
+                        placeholder="Enter your service ID"
+                        style="flex: 1; padding: 0.75rem; background: var(--ghozt-panel); border: 1px solid var(--ghozt-green); border-radius: var(--radius-sm); color: white; font-family: var(--font-mono);"
+                    >
+                    <button onclick="trackService()" class="btn btn-primary">
+                        <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+                    </button>
+                </div>
+                <p style="color: #666; font-size: 0.75rem; margin-top: 0.5rem;">Check your email for your service ID</p>
+            </div>
+
+            <!-- Technician Profile Card -->
+            <div id="tech-profile" class="tech-profile" style="display: none;">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <i data-lucide="user" style="width: 40px; height: 40px; color: var(--ghozt-green);"></i>
+                    </div>
+                    <div>
+                        <h3 id="tech-name" class="glow-green">Avery Delpit</h3>
+                        <p id="tech-title" style="color: #888; font-size: 0.875rem;">Lead Technician</p>
+                    </div>
+                </div>
+
+                <!-- Credentials -->
+                <div class="credentials-section">
+                    <h4 style="color: var(--ghozt-blue); font-size: 0.875rem; margin-bottom: 0.75rem; font-family: var(--font-mono);">CREDENTIALS</h4>
+                    <div class="credential-badges">
+                        <div class="credential-badge">
+                            <i data-lucide="shield-check" style="width: 16px; height: 16px; color: var(--ghozt-green);"></i>
+                            <span>94F Veteran</span>
+                        </div>
+                        <div class="credential-badge">
+                            <i data-lucide="award" style="width: 16px; height: 16px; color: var(--ghozt-blue);"></i>
+                            <span>Secret Clearance</span>
+                        </div>
+                        <div class="credential-badge">
+                            <i data-lucide="graduation-cap" style="width: 16px; height: 16px; color: var(--ghozt-green);"></i>
+                            <span>CompTIA Security+</span>
+                        </div>
+                        <div class="credential-badge">
+                            <i data-lucide="cpu" style="width: 16px; height: 16px; color: var(--ghozt-blue);"></i>
+                            <span>Network+</span>
+                        </div>
+                        <div class="credential-badge">
+                            <i data-lucide="lock" style="width: 16px; height: 16px; color: var(--ghozt-green);"></i>
+                            <span>CMMC Certified</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Status -->
+                <div class="status-section">
+                    <h4 style="color: var(--ghozt-blue); font-size: 0.875rem; margin-bottom: 0.75rem; font-family: var(--font-mono);">SERVICE STATUS</h4>
+                    <div class="status-item">
+                        <div class="status-icon">
+                            <i data-lucide="clock" style="width: 20px; height: 20px; color: var(--ghozt-green);"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: #888;">ETA</div>
+                            <div id="eta-time" class="glow-green" style="font-size: 1.25rem; font-weight: 700;">15 min</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon">
+                            <i data-lucide="navigation" style="width: 20px; height: 20px; color: var(--ghozt-blue);"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: #888;">Distance</div>
+                            <div id="distance" class="glow-blue" style="font-size: 1.25rem; font-weight: 700;">3.2 mi</div>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-icon">
+                            <i data-lucide="activity" style="width: 20px; height: 20px; color: var(--ghozt-green);"></i>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.75rem; color: #888;">Status</div>
+                            <div id="service-status" class="glow-green" style="font-size: 1rem; font-weight: 700;">En Route</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Options -->
+                <div class="contact-section">
+                    <button class="btn btn-outline" style="width: 100%; margin-bottom: 0.5rem;" onclick="callTechnician()">
+                        <i data-lucide="phone" style="width: 16px; height: 16px; margin-right: 8px;"></i>
+                        Call Technician
+                    </button>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="openChat()">
+                        <i data-lucide="message-circle" style="width: 16px; height: 16px; margin-right: 8px;"></i>
+                        Live Chat
+                    </button>
+                </div>
+
+                <!-- Service Details -->
+                <div class="service-details">
+                    <h4 style="color: var(--ghozt-blue); font-size: 0.875rem; margin-bottom: 0.75rem; font-family: var(--font-mono);">SERVICE DETAILS</h4>
+                    <div class="detail-item">
+                        <span style="color: #888;">Service Type:</span>
+                        <span id="service-type" style="color: white;">Network Setup</span>
+                    </div>
+                    <div class="detail-item">
+                        <span style="color: #888;">Scheduled:</span>
+                        <span id="scheduled-time" style="color: white;">2:00 PM</span>
+                    </div>
+                    <div class="detail-item">
+                        <span style="color: #888;">Service ID:</span>
+                        <span id="display-service-id" style="color: var(--ghozt-green); font-family: var(--font-mono);">GHZ-2025-001</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Mode Notice -->
+            <div class="demo-notice">
+                <i data-lucide="info" style="width: 16px; height: 16px; color: var(--ghozt-blue);"></i>
+                <div>
+                    <strong>Demo Mode</strong>
+                    <p>Try service ID: <code>DEMO-001</code></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Container -->
+        <div class="map-container">
+            <div id="map" class="map"></div>
+            
+            <!-- Map Controls -->
+            <div class="map-controls">
+                <button class="map-control-btn" onclick="centerOnTechnician()" title="Center on Technician">
+                    <i data-lucide="crosshair" style="width: 20px; height: 20px;"></i>
+                </button>
+                <button class="map-control-btn" onclick="toggleTraffic()" title="Toggle Traffic">
+                    <i data-lucide="traffic-cone" style="width: 20px; height: 20px;"></i>
+                </button>
+                <button class="map-control-btn" onclick="refreshLocation()" title="Refresh Location">
+                    <i data-lucide="refresh-cw" style="width: 20px; height: 20px;"></i>
+                </button>
+            </div>
+
+            <!-- Live Updates Banner -->
+            <div class="live-banner">
+                <span class="pulse-dot"></span>
+                <span>LIVE TRACKING ACTIVE</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Modal -->
+    <div id="chat-modal" class="chat-modal" style="display: none;">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3>Live Chat with Technician</h3>
+                <button onclick="closeChat()" style="background: none; border: none; color: white; cursor: pointer;">
+                    <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-message tech-message">
+                    <strong>Avery (Technician)</strong>
+                    <p>Hi! I'm on my way to your location. ETA is about 15 minutes. Is there anything specific you'd like me to know before I arrive?</p>
+                    <span class="chat-time">2:45 PM</span>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input 
+                    type="text" 
+                    id="chat-input" 
+                    placeholder="Type your message..."
+                    onkeypress="handleChatKeypress(event)"
+                >
+                <button onclick="sendMessage()" class="btn btn-primary">
+                    <i data-lucide="send" style="width: 16px; height: 16px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="assets/js/tracker.js"></script>
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
