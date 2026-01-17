@@ -70,3 +70,8 @@ data/GeoLite2-City.mmdb
 *.bak
 *.backup
 *~
+
+# Submodule directories (not part of this project)
+Ghozta1320.github.io/
+final_project/
+scam-detection-backend/
