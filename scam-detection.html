@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Advanced Scam Detection & Education - GHOZTWOODS LLC. Report scams, learn about threats, and protect yourself.">
+    <title>Scam Detection & Education | GHOZTWOODS LLC</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        .scanner-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--ghozt-panel);
+            border: 2px solid var(--ghozt-green);
+            border-radius: var(--radius-md);
+            color: white;
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .scanner-input:focus {
+            outline: none;
+            border-color: var(--ghozt-blue);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        .threat-level {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            font-weight: 700;
+        }
+        
+        .threat-low { background: rgba(0, 255, 0, 0.2); color: var(--ghozt-green); border: 1px solid var(--ghozt-green); }
+        .threat-medium { background: rgba(255, 165, 0, 0.2); color: #ffa500; border: 1px solid #ffa500; }
+        .threat-high { background: rgba(255, 0, 0, 0.2); color: #ff0000; border: 1px solid #ff0000; }
+        
+        .scam-type-card {
+            background: var(--ghozt-panel);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all var(--transition-normal);
+        }
+        
+        .scam-type-card:hover {
+            border-color: var(--ghozt-green);
+            transform: translateX(5px);
+        }
+        
+        .results-container {
+            background: var(--ghozt-panel);
+            border: 2px solid var(--ghozt-green);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .results-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i data-lucide="ghost" style="width: 32px; height: 32px;"></i>
+                <span>GHOZTWOODS<span>_LLC</span></span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html#mission" class="nav-link">./MISSION</a></li>
+                <li><a href="index.html#services" class="nav-link">./SERVICES</a></li>
+                <li><a href="technician-tracker.html" class="nav-link">./TRACK_TECH</a></li>
+                <li><a href="scam-detection.html" class="nav-link active">./SCAM_INTEL</a></li>
+                <li><a href="index.html#contact" class="nav-link">./CONTACT</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero grid-background" style="min-height: 60vh;">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse"></span>
+                THREAT INTELLIGENCE ACTIVE
+            </div>
+            
+            <h1 class="hero-title fade-in">
+                SCAM DETECTION<br>
+                <span class="gradient-text glow-dual">& EDUCATION</span>
+            </h1>
+            
+            <p class="hero-description fade-in">
+                Advanced threat intelligence and scam detection tools. Protect yourself and your business from cyber threats with our AI-powered analysis and educational resources.
+            </p>
+        </div>
+    </section>
+
+    <!-- Scanner Section -->
+    <section class="section" style="background-color: var(--ghozt-black);">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <div class="section-label glow-green">./THREAT_SCANNER</div>
+                <h2 class="section-title">Analyze Suspicious Content</h2>
+                <p style="color: #888;">Enter a phone number, email, URL, or message to check for scams</p>
+            </div>
+
+            <div class="card">
+                <form id="scanner-form" onsubmit="analyzeThreat(event)">
+                    <label for="threat-input" style="display: block; color: var(--ghozt-green); font-family: var(--font-mono); margin-bottom: 0.5rem;">ENTER SUSPICIOUS CONTENT</label>
+                    <textarea 
+                        id="threat-input" 
+                        class="scanner-input" 
+                        rows="4" 
+                        placeholder="Enter phone number, email, URL, or suspicious message..."
+                        required
+                    ></textarea>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i data-lucide="shield-alert" style="width: 20px; height: 20px; margin-right: 8px;"></i>
+                        ANALYZE THREAT
+                    </button>
+                </form>
+
+                <div id="results" class="results-container">
+                    <h3 class="glow-green" style="margin-bottom: 1rem;">ANALYSIS RESULTS</h3>
+                    <div id="results-content"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Common Scams Section -->
+    <section class="section" style="background-color: var(--ghozt-dark);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label glow-blue">./THREAT_DATABASE</div>
+                <h2 class="section-title">Common Scam Types</h2>
+                <p style="color: #888;">Learn to recognize and avoid these common threats</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <!-- Phishing -->
+                <div class="scam-type-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <i data-lucide="mail" style="width: 32px; height: 32px; color: var(--ghozt-green);"></i>
+                        <h3 style="color: var(--ghozt-green); margin: 0;">Phishing Emails</h3>
+                    </div>
+                    <p style="color: #ccc; font-size: 0.875rem; margin-bottom: 1rem;">Fraudulent emails designed to steal personal information or credentials.</p>
+                    <div class="threat-level threat-high">HIGH RISK</div>
+                    <ul style="list-style: none; padding: 0; margin-top: 1rem; color: #888; font-size: 0.875rem;">
+                        <li>• Urgent requests for action</li>
+                        <li>• Suspicious sender addresses</li>
+                        <li>• Requests for passwords</li>
+                    </ul>
+                </div>
+
+                <!-- Phone Scams -->
+                <div class="scam-type-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <i data-lucide="phone" style="width: 32px; height: 32px; color: var(--ghozt-blue);"></i>
+                        <h3 style="color: var(--ghozt-blue); margin: 0;">Phone Scams</h3>
+                    </div>
+                    <p style="color: #ccc; font-size: 0.875rem; margin-bottom: 1rem;">Fraudulent calls impersonating legitimate organizations or authorities.</p>
+                    <div class="threat-level threat-high">HIGH RISK</div>
+                    <ul style="list-style: none; padding: 0; margin-top: 1rem; color: #888; font-size: 0.875rem;">
+                        <li>• IRS/Government impersonation</li>
+                        <li>• Tech support scams</li>
+                        <li>• Prize/lottery scams</li>
+                    </ul>
+                </div>
+
+                <!-- Crypto Scams -->
+                <div class="scam-type-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <i data-lucide="bitcoin" style="width: 32px; height: 32px; color: var(--ghozt-green);"></i>
+                        <h3 style="color: var(--ghozt-green); margin: 0;">Crypto Scams</h3>
+                    </div>
+                    <p style="color: #ccc; font-size: 0.875rem; margin-bottom: 1rem;">Fraudulent cryptocurrency investments and fake wallet schemes.</p>
+                    <div class="threat-level threat-high">HIGH RISK</div>
+                    <ul style="list-style: none; padding: 0; margin-top: 1rem; color: #888; font-size: 0.875rem;">
+                        <li>• Fake investment platforms</li>
+                        <li>• Ponzi schemes</li>
+                        <li>• Wallet draining</li>
+                    </ul>
+                </div>
+
+                <!-- Romance Scams -->
+                <div class="scam-type-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <i data-lucide="heart" style="width: 32px; height: 32px; color: var(--ghozt-blue);"></i>
+                        <h3 style="color: var(--ghozt-blue); margin: 0;">Romance Scams</h3>
+                    </div>
+                    <p style="color: #ccc; font-size: 0.875rem; margin-bottom: 1rem;">Fake online relationships designed to extract money from victims.</p>
+                    <div class="threat-level threat-medium">MEDIUM RISK</div>
+                    <ul style="list-style: none; padding: 0; margin-top: 1rem; color: #888; font-size: 0.875rem;">
+                        <li>• Quick declarations of love</li>
+                        <li>• Requests for money</li>
+                        <li>• Avoidance of video calls</li>
+                    </ul>
+                </div>
+
+                <!-- Online Shopping -->
+                <div class="scam-type-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <i data-lucide="shopping-bag" style="width: 32px; height: 32px; color: var(--ghozt-green);"></i>
+                        <h3 style="color: var(--ghozt-green); margin: 0;">Shopping Scams</h3>
+                    </div>
+                    <p style="color: #ccc; font-size: 0.875rem; margin-bottom: 1rem;">Fake online stores and fraudulent marketplace listings.</p>
+                    <div class="threat-level threat-medium">MEDIUM RISK</div>
+                    <ul style="list-style: none; padding: 0; margin-top: 1rem; color: #888; font-size: 0.875rem;">
+                        <li>• Too-good-to-be-true prices</li>
+                        <li>• No secure payment options</li>
+                        <li>• Poor website quality</li>
+                    </ul>
+                </div>
+
+                <!-- Identity Theft -->
+                <div class="scam-type-card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <i data-lucide="user-x" style="width: 32px; height: 32px; color: var(--ghozt-blue);"></i>
+                        <h3 style="color: var(--ghozt-blue); margin: 0;">Identity Theft</h3>
+                    </div>
+                    <p style="color: #ccc; font-size: 0.875rem; margin-bottom: 1rem;">Unauthorized use of personal information for fraudulent purposes.</p>
+                    <div class="threat-level threat-high">HIGH RISK</div>
+                    <ul style="list-style: none; padding: 0; margin-top: 1rem; color: #888; font-size: 0.875rem;">
+                        <li>• Data breaches</li>
+                        <li>• Social engineering</li>
+                        <li>• Document theft</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Scam Section -->
+    <section class="section" style="background-color: var(--ghozt-black);">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <div class="section-label glow-green">./REPORT_THREAT</div>
+                <h2 class="section-title">Report a Scam</h2>
+                <p style="color: #888;">Help protect others by reporting suspicious activity</p>
+            </div>
+
+            <div class="card">
+                <form id="report-form" onsubmit="submitReport(event)">
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; color: var(--ghozt-green); font-family: var(--font-mono); margin-bottom: 0.5rem;">SCAM TYPE</label>
+                        <select class="scanner-input" required>
+                            <option value="">Select scam type...</option>
+                            <option value="phishing">Phishing Email</option>
+                            <option value="phone">Phone Scam</option>
+                            <option value="crypto">Cryptocurrency Scam</option>
+                            <option value="romance">Romance Scam</option>
+                            <option value="shopping">Online Shopping Scam</option>
+                            <option value="identity">Identity Theft</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; color: var(--ghozt-green); font-family: var(--font-mono); margin-bottom: 0.5rem;">DESCRIPTION</label>
+                        <textarea class="scanner-input" rows="6" placeholder="Describe the scam in detail..." required></textarea>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="display: block; color: var(--ghozt-green); font-family: var(--font-mono); margin-bottom: 0.5rem;">CONTACT INFO (OPTIONAL)</label>
+                        <input type="email" class="scanner-input" placeholder="your.email@example.com">
+                    </div>
+
+                    <button type="submit" class="btn btn-secondary" style="width: 100%;">
+                        <i data-lucide="send" style="width: 20px; height: 20px; margin-right: 8px;"></i>
+                        SUBMIT REPORT
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <i data-lucide="ghost" style="width: 24px; height: 24px; color: var(--ghozt-green);"></i>
+                        <span style="font-family: var(--font-mono); font-weight: 700; font-size: 1.25rem;">GHOZTWOODS</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; max-width: 300px;">
+                        Elite MSP & Cybersecurity Solutions serving Fort Liberty and the Fayetteville ecosystem.
+                    </p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>QUICK_LINKS</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="technician-tracker.html">Track Technician</a></li>
+                        <li><a href="scam-detection.html">Scam Detection</a></li>
+                        <li><a href="index.html#intake">Request Service</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>CONTACT_HQ</h3>
+                    <ul class="footer-links">
+                        <li style="display: flex; align-items: start; gap: 0.5rem;">
+                            <i data-lucide="map-pin" style="width: 16px; height: 16px; color: var(--ghozt-green); margin-top: 2px;"></i>
+                            <span>5135 Morganton RD STE 103<br>Fayetteville, NC</span>
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="phone" style="width: 16px; height: 16px; color: var(--ghozt-green);"></i>
+                            <span>(934) 667-0073</span>
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="mail" style="width: 16px; height: 16px; color: var(--ghozt-green);"></i>
+                            <span>AVERYAD59@GHOZTWOODS.COM</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>CREDENTIALS</h3>
+                    <ul class="footer-links">
+                        <li>UEI: GCFHX3G9L4A6</li>
+                        <li>CAGE: 9MU60</li>
+                        <li>Status: SDVOSB</li>
+                        <li>Clearance: Active Secret</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 GHOZTWOODS LLC. ALL RIGHTS RESERVED. | POWERED BY VETERAN EXCELLENCE</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Analyze Threat Function
+        function analyzeThreat(event) {
+            event.preventDefault();
+            
+            const input = document.getElementById('threat-input').value;
+            const resultsContainer = document.getElementById('results');
+            const resultsContent = document.getElementById('results-content');
+            
+            // Show loading
+            resultsContent.innerHTML = '<p style="color: var(--ghozt-green);">Analyzing threat...</p>';
+            resultsContainer.classList.add('show');
+            
+            // Simulate analysis (in production, this would call your backend API)
+            setTimeout(() => {
+                const analysis = performAnalysis(input);
+                displayResults(analysis);
+            }, 2000);
+        }
+
+        function performAnalysis(input) {
+            // Simple demo analysis logic
+            const hasPhone = /\d{3}[-.]?\d{3}[-.]?\d{4}/.test(input);
+            const hasEmail = /@/.test(input);
+            const hasURL = /https?:\/\//.test(input);
+            const hasSuspiciousWords = /(urgent|act now|verify|suspended|prize|winner|claim)/i.test(input);
+            
+            let riskLevel = 'LOW';
+            let riskFactors = [];
+            
+            if (hasSuspiciousWords) {
+                riskLevel = 'HIGH';
+                riskFactors.push('Contains urgent/suspicious language');
+            }
+            
+            if (hasPhone) {
+                riskFactors.push('Contains phone number');
+            }
+            
+            if (hasEmail) {
+                riskFactors.push('Contains email address');
+            }
+            
+            if (hasURL) {
+                riskFactors.push('Contains URL - verify before clicking');
+            }
+            
+            if (riskFactors.length > 2) {
+                riskLevel = 'HIGH';
+            } else if (riskFactors.length > 0) {
+                riskLevel = 'MEDIUM';
+            }
+            
+            return { riskLevel, riskFactors };
+        }
+
+        function displayResults(analysis) {
+            const resultsContent = document.getElementById('results-content');
+            
+            const threatClass = analysis.riskLevel === 'HIGH' ? 'threat-high' : 
+                               analysis.riskLevel === 'MEDIUM' ? 'threat-medium' : 'threat-low';
+            
+            let html = `
+                <div style="margin-bottom: 1.5rem;">
+                    <span class="threat-level ${threatClass}">${analysis.riskLevel} RISK</span>
+                </div>
+            `;
+            
+            if (analysis.riskFactors.length > 0) {
+                html += `
+                    <h4 style="color: var(--ghozt-blue); margin-bottom: 1rem;">RISK FACTORS DETECTED:</h4>
+                    <ul style="list-style: none; padding: 0;">
+                `;
+                
+                analysis.riskFactors.forEach(factor => {
+                    html += `<li style="color: #ccc; margin-bottom: 0.5rem;">• ${factor}</li>`;
+                });
+                
+                html += `</ul>`;
+            }
+            
+            html += `
+                <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(0, 212, 255, 0.1); border-left: 3px solid var(--ghozt-blue); border-radius: var(--radius-sm);">
+                    <strong style="color: var(--ghozt-blue);">RECOMMENDATION:</strong>
+                    <p style="color: #ccc; margin-top: 0.5rem;">
+                        ${analysis.riskLevel === 'HIGH' ? 'Do not respond or click any links. Report this immediately.' :
+                          analysis.riskLevel === 'MEDIUM' ? 'Exercise caution. Verify the source before taking action.' :
+                          'Appears relatively safe, but always verify before sharing personal information.'}
+                    </p>
+                </div>
+            `;
+            
+            resultsContent.innerHTML = html;
+        }
+
+        function submitReport(event) {
+            event.preventDefault();
+            alert('Thank you for your report! Our team will review it shortly.');
+            event.target.reset();
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

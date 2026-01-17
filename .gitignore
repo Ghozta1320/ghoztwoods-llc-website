@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# API Keys and Secrets
+config/api_keys.json
+.env
+*.key
+*.pem
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Node modules (if using any JS build tools)
+node_modules/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# GeoIP Database (large file)
+data/GeoLite2-City.mmdb
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Submodule directories (not part of this project)
+Ghozta1320.github.io/
+final_project/
+scam-detection-backend/
