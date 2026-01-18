@@ -4,7 +4,7 @@
 ![Status](https://img.shields.io/badge/STATUS-ONLINE-00ff00?style=for-the-badge)
 ![SDVOSB](https://img.shields.io/badge/SDVOSB-CERTIFIED-00d4ff?style=for-the-badge)
 
-**Elite MSP & Cybersecurity Solutions** serving Fort Liberty and the Fayetteville, NC ecosystem.
+**Elite MSP & Cybersecurity Solutions** serving Fort Bragg and the Fayetteville, NC ecosystem.
 
 ---
 
@@ -260,7 +260,7 @@ We welcome contributions! Please follow these steps:
 - **Address**: 5135 Morganton RD STE 103, Fayetteville, NC
 - **Phone**: (934) 667-0073
 - **Email**: AVERYAD59@GHOZTWOODS.COM
-- **Website**: [Coming Soon]
+- **Website**: www.ghoztwoods.com
 
 ---
 
@@ -270,7 +270,7 @@ We welcome contributions! Please follow these steps:
 - **CAGE Code**: 9MU60
 - **Status**: SDVOSB (Service-Disabled Veteran-Owned Small Business)
 - **Clearance**: Active Secret
-- **Owner**: Avery Delpit, 94F Veteran
+- **Owner**: Avery Delpit, US Army Service-Disabled Veteran
 
 ---
 
@@ -297,7 +297,7 @@ Proudly owned and operated by a **94F Computer Detection Systems Repairer** vete
 - [x] Google Form integration
 
 ### Phase 2: Enhancement (In Progress)
-- [ ] Scam detection page
+- [x] Scam detection page
 - [ ] Backend API integration
 - [ ] Real-time notifications
 - [ ] Customer portal
@@ -322,7 +322,7 @@ Proudly owned and operated by a **94F Computer Detection Systems Repairer** vete
 
 ## 🌟 Testimonials
 
-> "The technician tracking feature is incredible! I knew exactly when to expect service." - *Client Review*
+> "The technician tracking feature is incredible! I knew exactly when to expect service." - In-Home House Call
 
 > "Professional, reliable, and transparent. GHOZTWOODS sets the standard." - *Business Partner*
 
