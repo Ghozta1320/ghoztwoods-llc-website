@@ -1,1 +1,408 @@
-<!DOCTYPE html><html lang="en" class="scroll-smooth"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>GHOZTWOODS LLC | Tech-First Solutions</title>    <meta name="description" content="GHOZTWOODS LLC: The Shield of Fayetteville. Managed IT, CMMC Compliance, and Low-Latency Network Solutions.">    <!-- Tailwind CSS -->    <script src="https://cdn.tailwindcss.com"></script>        <!-- Fonts -->    <link rel="preconnect" href="https://fonts.googleapis.com">    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">        <!-- Icons -->    <script src="https://unpkg.com/lucide@latest"></script>    <script>        tailwind.config = {            theme: {                extend: {                    fontFamily: {                        sans: ['Inter', 'sans-serif'],                        mono: ['JetBrains Mono', 'monospace'],                    },                    colors: {                        ghozt: {                            black: '#0a0a0a',                            dark: '#121212',                            panel: '#1e1e1e',                            green: '#00ff41',                             dimGreen: 'rgba(0, 255, 65, 0.1)',                        }                    },                    backgroundImage: {                        'grid-pattern': "linear-gradient(to right, #1e1e1e 1px, transparent 1px), linear-gradient(to bottom, #1e1e1e 1px, transparent 1px)",                    }                }            }        }    </script>    <style>        body { background-color: #0a0a0a; color: #e5e5e5; }        .scanline {            width: 100%; height: 100px; z-index: 10;            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0, 255, 65, 0.02) 50%, rgba(0,0,0,0) 100%);            opacity: 0.1; position: absolute; bottom: 100%;            animation: scanline 10s linear infinite; pointer-events: none;        }        @keyframes scanline { 0% { bottom: 100%; } 100% { bottom: -100%; } }        .glitch-hover:hover { text-shadow: 2px 0 #ef4444, -2px 0 #3b82f6; }    </style></head><body class="antialiased font-sans selection:bg-ghozt-green selection:text-ghozt-black overflow-x-hidden">    <!-- Navigation -->    <nav class="fixed w-full z-50 bg-ghozt-black/90 backdrop-blur-md border-b border-ghozt-panel">        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">            <div class="flex items-center justify-between h-20">                <div class="flex-shrink-0 flex items-center gap-2">                    <i data-lucide="ghost" class="h-8 w-8 text-ghozt-green"></i>                    <span class="font-mono font-bold text-xl tracking-tighter">GHOZTWOODS<span class="text-ghozt-green">_LLC</span></span>                </div>                <div class="hidden md:block">                    <div class="ml-10 flex items-baseline space-x-8">                        <a href="#mission" class="hover:text-ghozt-green transition-colors font-mono text-sm">./MISSION</a>                        <a href="#services" class="hover:text-ghozt-green transition-colors font-mono text-sm">./SERVICES</a>                        <a href="#intel" class="hover:text-ghozt-green transition-colors font-mono text-sm">./INTEL_DOCS</a>                        <a href="#flyer" class="hover:text-ghozt-green transition-colors font-mono text-sm">./DEPLOY</a>                        <a href="#contact" class="bg-ghozt-green text-ghozt-black px-4 py-2 rounded font-bold font-mono text-sm hover:bg-white transition-colors">CONTACT_HQ</a>                    </div>                </div>            </div>        </div>    </nav>    <!-- Hero Section -->    <section id="mission" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">        <div class="absolute inset-0 bg-grid-pattern bg-[length:40px_40px] opacity-20"></div>        <div class="scanline"></div>        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">            <div class="lg:w-2/3">                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ghozt-dimGreen border border-ghozt-green/30 text-ghozt-green font-mono text-xs mb-6">                    <span class="animate-pulse">●</span> SYSTEM STATUS: ONLINE // FAYETTEVILLE, NC                </div>                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 glitch-hover cursor-default">                    WE STOP THE <br>                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-ghozt-green to-emerald-600">DOWNTIME</span>                </h1>                <p class="text-xl text-gray-400 mb-8 max-w-2xl leading-relaxed">                    The Shield of Fayetteville. We don't sell promises. We demonstrate proof.                     Retail Security. GovCon Compliance. Streamer Optimization.                </p>                <div class="flex flex-col sm:flex-row gap-4">                    <a href="#flyer" class="inline-flex justify-center items-center px-8 py-4 border border-transparent text-base font-bold rounded bg-ghozt-green text-ghozt-black hover:bg-white transition-all">                        DEPLOY SOLUTIONS                    </a>                    <a href="#intel" class="inline-flex justify-center items-center px-8 py-4 border border-ghozt-panel text-base font-bold rounded bg-ghozt-panel/50 text-white hover:bg-ghozt-panel transition-all font-mono">                        ACCESS INTEL                    </a>                </div>            </div>        </div>    </section>    <!-- Stats Bar -->    <div class="border-y border-ghozt-panel bg-ghozt-dark">        <div class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">            <div class="grid grid-cols-2 gap-8 md:grid-cols-4 text-center">                <div><dt class="text-sm font-mono text-gray-400">UEI (SAM)</dt><dd class="text-2xl font-bold text-white">GCFHX3G9L4A6</dd></div>                <div><dt class="text-sm font-mono text-gray-400">CAGE</dt><dd class="text-2xl font-bold text-white">9MU60</dd></div>                <div><dt class="text-sm font-mono text-gray-400">STATUS</dt><dd class="text-2xl font-bold text-white">SDVOSB</dd></div>                <div><dt class="text-sm font-mono text-gray-400">CLEARANCE</dt><dd class="text-2xl font-bold text-white">ACTIVE SECRET</dd></div>            </div>        </div>    </div>    <!-- Capabilities / Services -->    <section id="services" class="py-24 bg-ghozt-black">        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">            <div class="text-center mb-16">                <h2 class="text-ghozt-green font-mono font-bold tracking-wide uppercase">./CAPABILITIES</h2>                <h3 class="text-3xl font-extrabold text-white">MISSION CRITICAL SUPPORT</h3>            </div>            <div class="grid md:grid-cols-3 gap-8">                <!-- GovCon -->                <div class="bg-ghozt-panel p-8 rounded border border-gray-800 hover:border-ghozt-green transition-all group">                    <i data-lucide="shield-alert" class="h-10 w-10 text-ghozt-green mb-4"></i>                    <h4 class="text-xl font-bold text-white mb-2">GovCon & Compliance</h4>                    <p class="text-gray-400 text-sm mb-4">CMMC Level 2 Readiness. Immutable audit logs. We ensure you keep your contract.</p>                </div>                <!-- Retail -->                <div class="bg-ghozt-panel p-8 rounded border border-gray-800 hover:border-ghozt-green transition-all group">                    <i data-lucide="shopping-cart" class="h-10 w-10 text-ghozt-green mb-4"></i>                    <h4 class="text-xl font-bold text-white mb-2">Retail & POS Security</h4>                    <p class="text-gray-400 text-sm mb-4">VLAN isolation for payment terminals. Stop losing sales to "System Down."</p>                </div>                <!-- Streamer -->                <div class="bg-ghozt-panel p-8 rounded border border-gray-800 hover:border-ghozt-green transition-all group">                    <i data-lucide="wifi" class="h-10 w-10 text-ghozt-green mb-4"></i>                    <h4 class="text-xl font-bold text-white mb-2">Streamer Optimization</h4>                    <p class="text-gray-400 text-sm mb-4">Hardware-level QoS. Zero Jitter config. We prioritize your upload packets.</p>                </div>            </div>        </div>    </section>    <!-- NEW SECTION: FLYERS & INTEL -->    <section id="intel" class="py-24 bg-ghozt-dark border-t border-ghozt-panel">        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">            <div class="flex items-center justify-between mb-12">                <div>                    <h2 class="text-ghozt-green font-mono font-bold">./OPERATIONAL_INTEL</h2>                    <h3 class="text-3xl font-extrabold text-white">DOWNLOADABLE ASSETS</h3>                </div>                <div class="hidden md:block">                    <span class="font-mono text-xs text-gray-500">DIR: /PUBLIC/ASSETS/</span>                </div>            </div>            <!-- INSTRUCTIONS FOR USER:                  1. Create a folder named 'assets' in the same folder as this index.html file.                 2. Put your flyer images/PDFs into that 'assets' folder.                 3. Update the 'href' and 'src' links below to match your filenames.             -->            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">                                <!-- Asset 1: Capability Statement -->                <div class="group relative bg-black border border-ghozt-panel rounded-lg overflow-hidden hover:border-ghozt-green transition-all">                    <div class="aspect-w-16 aspect-h-9 bg-gray-800 flex items-center justify-center">                        <!-- Replace 'assets/cap_statement_thumb.jpg' with your image -->                        <i data-lucide="file-text" class="h-16 w-16 text-gray-600 group-hover:text-ghozt-green transition-colors"></i>                    </div>                    <div class="p-6">                        <h4 class="text-white font-bold mb-2">Capability Statement 2025</h4>                        <p class="text-xs text-gray-500 font-mono mb-4">OFFICIAL GOVCON DESIGNATION</p>                        <a href="./assets/GHOZTWOODS_LLC_CAPABILITY_STATEMENT_2025-05-09.pdf" target="_blank" class="block w-full text-center bg-ghozt-panel hover:bg-ghozt-green hover:text-black text-white text-xs font-mono py-2 rounded transition-colors">                            DOWNLOAD PDF                        </a>                    </div>                </div>                <!-- Asset 2: War Dogs Flyer -->                <div class="group relative bg-black border border-ghozt-panel rounded-lg overflow-hidden hover:border-ghozt-green transition-all">                    <div class="aspect-w-16 aspect-h-9 bg-gray-800 flex items-center justify-center">                         <!-- Replace with flyer thumbnail if available -->                        <i data-lucide="image" class="h-16 w-16 text-gray-600 group-hover:text-ghozt-green transition-colors"></i>                    </div>                    <div class="p-6">                        <h4 class="text-white font-bold mb-2">War Dogs Academy</h4>                        <p class="text-xs text-gray-500 font-mono mb-4">TRAINING & RECRUITMENT</p>                        <!-- Update filename below -->                        <a href="./assets/flyer_wardogs.jpg" target="_blank" class="block w-full text-center bg-ghozt-panel hover:bg-ghozt-green hover:text-black text-white text-xs font-mono py-2 rounded transition-colors">                            VIEW FULL SIZE                        </a>                    </div>                </div>                <!-- Asset 3: Newest Promo -->                <div class="group relative bg-black border border-ghozt-panel rounded-lg overflow-hidden hover:border-ghozt-green transition-all">                    <div class="aspect-w-16 aspect-h-9 bg-gray-800 flex items-center justify-center">                        <i data-lucide="zap" class="h-16 w-16 text-gray-600 group-hover:text-ghozt-green transition-colors"></i>                    </div>                    <div class="p-6">                        <h4 class="text-white font-bold mb-2">New Client Promo</h4>                        <p class="text-xs text-gray-500 font-mono mb-4">LATEST DEPLOYMENT OFFER</p>                        <!-- Update filename below -->                        <a href="./assets/flyer_newest.jpg" target="_blank" class="block w-full text-center bg-ghozt-panel hover:bg-ghozt-green hover:text-black text-white text-xs font-mono py-2 rounded transition-colors">                            VIEW FULL SIZE                        </a>                    </div>                </div>            </div>        </div>    </section>    <!-- Google Form Section -->    <section id="flyer" class="py-24 bg-ghozt-black border-t border-ghozt-panel">        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">            <h2 class="text-3xl font-extrabold text-white mb-4">SERVICE INTAKE</h2>            <p class="text-gray-400 mb-12">Submit your service request below.</p>                        <!-- GOOGLE FORM CONTAINER -->            <div class="bg-white rounded-lg overflow-hidden shadow-2xl h-[800px] w-full">                <!-- UPDATED GOOGLE FORM LINK -->                <iframe                     src="https://docs.google.com/forms/d/e/1FAIpQLSewDTwjYiig-qBwj75JgngFv-NbxubmpWqAeT26vncrIQvF3w/viewform?embedded=true"                     width="100%"                     height="100%"                     frameborder="0"                     marginheight="0"                     marginwidth="0">                    Loading GHOZTWOODS Operations Form...                </iframe>            </div>        </div>    </section>    <!-- Footer -->    <footer id="contact" class="bg-ghozt-dark border-t border-ghozt-panel pt-16 pb-8">        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">            <div class="grid md:grid-cols-4 gap-12 mb-12">                <div class="col-span-1 md:col-span-2">                    <div class="flex items-center gap-2 mb-4">                        <i data-lucide="ghost" class="h-6 w-6 text-ghozt-green"></i>                        <span class="font-mono font-bold text-xl">GHOZTWOODS</span>                    </div>                    <p class="text-gray-500 mb-6 max-w-sm">                        Located in Fayetteville, NC. Serving Fort Liberty and the surrounding ecosystem.                    </p>                </div>                <div>                    <h3 class="text-white font-bold mb-4 font-mono">CONTACT_HQ</h3>                    <ul class="space-y-3 text-sm text-gray-400">                        <li class="flex items-start"><i data-lucide="map-pin" class="h-4 w-4 mr-2 mt-1 text-ghozt-green"></i>5135 Morganton RD STE 103</li>                        <li class="flex items-center"><i data-lucide="phone" class="h-4 w-4 mr-2 text-ghozt-green"></i>(934) 667-0073</li>                        <li class="flex items-center"><i data-lucide="mail" class="h-4 w-4 mr-2 text-ghozt-green"></i>AVERYAD59@GHOZTWOODS.COM</li>                    </ul>                </div>            </div>            <div class="border-t border-gray-800 pt-8 flex justify-between items-center">                <p class="text-xs text-gray-600 font-mono">© 2025 GHOZTWOODS LLC. ALL RIGHTS RESERVED.</p>            </div>        </div>    </footer>    <script>        lucide.createIcons();        document.querySelectorAll('a[href^="#"]').forEach(anchor => {            anchor.addEventListener('click', function (e) {                e.preventDefault();                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });            });        });    </script></body></html>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GHOZTWOODS LLC - Elite MSP & Cybersecurity Solutions. Government Contracts, Retail Security, Streamer Optimization, and Advanced Scam Detection.">
+    <meta name="keywords" content="MSP, Managed IT, Cybersecurity, CMMC, SDVOSB, Fayetteville NC, Fort Liberty, Scam Detection">
+    <title>GHOZTWOODS LLC | Elite MSP & Cybersecurity Solutions</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./assets/css/main.css">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Matrix Rain Canvas -->
+    <canvas id="matrix-canvas" class="matrix-canvas"></canvas>
+    
+    <!-- Scanline Effect -->
+    <div class="scanline"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i data-lucide="ghost" style="width: 32px; height: 32px;"></i>
+                <span>GHOZTWOODS<span>_LLC</span></span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#mission" class="nav-link">./MISSION</a></li>
+                <li><a href="#services" class="nav-link">./SERVICES</a></li>
+                <li><a href="technician-tracker.html" class="nav-link">./TRACK_TECH</a></li>
+                <li><a href="scam-detection.html" class="nav-link">./SCAM_INTEL</a></li>
+                <li><a href="#contact" class="nav-link">./CONTACT</a></li>
+                <li><a href="#intake" class="btn btn-primary">DEPLOY_NOW</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="mission" class="hero grid-background">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse"></span>
+                SYSTEM STATUS: ONLINE // FAYETTEVILLE, NC
+            </div>
+            
+            <h1 class="hero-title fade-in">
+                WE STOP THE<br>
+                <span class="gradient-text glow-dual">DOWNTIME</span>
+            </h1>
+            
+            <p class="hero-description fade-in">
+                The Shield of Fayetteville. We don't sell promises—we demonstrate proof. 
+                Enterprise-grade MSP solutions for Government Contracts, Retail Security, 
+                and Streamer Optimization. Plus advanced scam detection and real-time technician tracking.
+            </p>
+            
+            <div class="hero-buttons fade-in">
+                <a href="#intake" class="btn btn-primary">
+                    <i data-lucide="zap" style="width: 20px; height: 20px; margin-right: 8px;"></i>
+                    DEPLOY SOLUTIONS
+                </a>
+                <a href="technician-tracker.html" class="btn btn-secondary">
+                    <i data-lucide="map-pin" style="width: 20px; height: 20px; margin-right: 8px;"></i>
+                    TRACK TECHNICIAN
+                </a>
+                <a href="scam-detection.html" class="btn btn-outline">
+                    <i data-lucide="shield-alert" style="width: 20px; height: 20px; margin-right: 8px;"></i>
+                    SCAM DETECTION
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-label">UEI (SAM)</div>
+                    <div class="stat-value glow-green">GCFHX3G9L4A6</div>
+                </div>
+                <div>
+                    <div class="stat-label">CAGE CODE</div>
+                    <div class="stat-value glow-green">9MU60</div>
+                </div>
+                <div>
+                    <div class="stat-label">STATUS</div>
+                    <div class="stat-value glow-blue">SDVOSB</div>
+                </div>
+                <div>
+                    <div class="stat-label">CLEARANCE</div>
+                    <div class="stat-value glow-blue">ACTIVE SECRET</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section (Enhanced with Gemini's Code) -->
+    <section id="services" class="section" style="background-color: #000;">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label glow-green">./CAPABILITIES</div>
+                <h2 class="section-title">CURRENT SERVICES</h2>
+                <p style="color: #888; font-size: 1.125rem;">Enterprise-Grade Solutions for Every Digital Citizen</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 4rem;">
+                <!-- B2B & Federal Services -->
+                <div class="card">
+                    <i data-lucide="shield-check" style="width: 40px; height: 40px; color: var(--ghozt-green); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--ghozt-green); font-size: 1.5rem; margin-bottom: 1rem;">B2B & Federal Services</h3>
+                    <ul style="list-style: none; padding: 0; line-height: 1.8; color: #ccc;">
+                        <li>• Managed IT & MSP Consulting</li>
+                        <li>• Cybersecurity Audits & Risk Assessment</li>
+                        <li>• SDVOSB Government Contracting</li>
+                        <li>• Network Infrastructure Design</li>
+                        <li>• CMMC Level 2 Readiness</li>
+                    </ul>
+                </div>
+
+                <!-- Creators & Gamers -->
+                <div class="card card-blue">
+                    <i data-lucide="gamepad-2" style="width: 40px; height: 40px; color: var(--ghozt-blue); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--ghozt-blue); font-size: 1.5rem; margin-bottom: 1rem;">Creators & Gamers</h3>
+                    <ul style="list-style: none; padding: 0; line-height: 1.8; color: #ccc;">
+                        <li>• High-Performance Stream Optimization</li>
+                        <li>• Gaming Rig Build & Troubleshooting</li>
+                        <li>• DDoS Protection & Identity Security</li>
+                        <li>• Content Creation Workflow Setup</li>
+                        <li>• Zero-Jitter Network Configuration</li>
+                    </ul>
+                </div>
+
+                <!-- Remote Pros & Students -->
+                <div class="card">
+                    <i data-lucide="laptop" style="width: 40px; height: 40px; color: var(--ghozt-green); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--ghozt-green); font-size: 1.5rem; margin-bottom: 1rem;">Remote Pros & Students</h3>
+                    <ul style="list-style: none; padding: 0; line-height: 1.8; color: #ccc;">
+                        <li>• Secure Home Office Configuration</li>
+                        <li>• Remote Access VPN Setup</li>
+                        <li>• Student Tech Support & AI Tutoring</li>
+                        <li>• Device Hardening & Malware Removal</li>
+                        <li>• Productivity Optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Additional Services -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                <!-- Retail & POS Security -->
+                <div class="card card-blue">
+                    <i data-lucide="shopping-cart" style="width: 40px; height: 40px; color: var(--ghozt-blue); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--ghozt-blue); font-size: 1.5rem; margin-bottom: 1rem;">Retail & POS Security</h3>
+                    <ul style="list-style: none; padding: 0; line-height: 1.8; color: #ccc;">
+                        <li>• VLAN Isolation for Payment Terminals</li>
+                        <li>• PCI DSS Compliance Solutions</li>
+                        <li>• Point-of-Sale System Hardening</li>
+                        <li>• Stop Losing Sales to "System Down"</li>
+                    </ul>
+                </div>
+
+                <!-- Technician Tracking -->
+                <div class="card box-glow-green">
+                    <i data-lucide="map-pin" style="width: 40px; height: 40px; color: var(--ghozt-green); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--ghozt-green); font-size: 1.5rem; margin-bottom: 1rem;">Real-Time Tech Tracking</h3>
+                    <ul style="list-style: none; padding: 0; line-height: 1.8; color: #ccc;">
+                        <li>• Live Technician Location Tracking</li>
+                        <li>• ETA Calculations & Updates</li>
+                        <li>• Technician Credentials Display</li>
+                        <li>• Better than Uber/DoorDash Experience</li>
+                    </ul>
+                    <a href="technician-tracker.html" class="btn btn-primary" style="margin-top: 1rem; width: 100%;">TRACK NOW</a>
+                </div>
+
+                <!-- Advanced Scam Detection -->
+                <div class="card box-glow-blue">
+                    <i data-lucide="shield-alert" style="width: 40px; height: 40px; color: var(--ghozt-blue); margin-bottom: 1rem;"></i>
+                    <h3 style="color: var(--ghozt-blue); font-size: 1.5rem; margin-bottom: 1rem;">Scam Detection & Education</h3>
+                    <ul style="list-style: none; padding: 0; line-height: 1.8; color: #ccc;">
+                        <li>• Advanced Threat Intelligence</li>
+                        <li>• Real-Time Scam Analysis</li>
+                        <li>• Educational Resources</li>
+                        <li>• Report Suspicious Activity</li>
+                    </ul>
+                    <a href="scam-detection.html" class="btn btn-secondary" style="margin-top: 1rem; width: 100%;">SCAN NOW</a>
+                </div>
+            </div>
+
+            <!-- Contact Info -->
+            <div style="text-align: center; margin-top: 4rem; padding: 2rem; background: var(--ghozt-panel); border-radius: var(--radius-md); border: 1px solid var(--ghozt-green);">
+                <p style="color: #888; margin-bottom: 0.5rem;">Contact the Ghoztwoods Command Center</p>
+                <p style="font-family: var(--font-mono); font-size: 1.5rem; color: var(--ghozt-green); font-weight: 700;">
+                    <i data-lucide="phone" style="width: 24px; height: 24px; vertical-align: middle; margin-right: 8px;"></i>
+                    +1 (934) 667-0073
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section" style="background-color: var(--ghozt-dark);">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label glow-blue">./COMPETITIVE_ADVANTAGE</div>
+                <h2 class="section-title">Why We Outshine Competitors</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1rem; background: var(--ghozt-green-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--ghozt-green);">
+                        <i data-lucide="shield" style="width: 40px; height: 40px; color: var(--ghozt-green);"></i>
+                    </div>
+                    <h3 style="color: var(--ghozt-green); margin-bottom: 0.5rem;">Veteran-Owned</h3>
+                    <p style="color: #888; font-size: 0.875rem;">94F Veteran with Active Secret Clearance</p>
+                </div>
+
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1rem; background: var(--ghozt-blue-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--ghozt-blue);">
+                        <i data-lucide="clock" style="width: 40px; height: 40px; color: var(--ghozt-blue);"></i>
+                    </div>
+                    <h3 style="color: var(--ghozt-blue); margin-bottom: 0.5rem;">Real-Time Tracking</h3>
+                    <p style="color: #888; font-size: 0.875rem;">Know exactly where your technician is</p>
+                </div>
+
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1rem; background: var(--ghozt-green-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--ghozt-green);">
+                        <i data-lucide="brain" style="width: 40px; height: 40px; color: var(--ghozt-green);"></i>
+                    </div>
+                    <h3 style="color: var(--ghozt-green); margin-bottom: 0.5rem;">AI-Powered</h3>
+                    <p style="color: #888; font-size: 0.875rem;">Advanced threat detection and analysis</p>
+                </div>
+
+                <div style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; margin: 0 auto 1rem; background: var(--ghozt-blue-dim); border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--ghozt-blue);">
+                        <i data-lucide="award" style="width: 40px; height: 40px; color: var(--ghozt-blue);"></i>
+                    </div>
+                    <h3 style="color: var(--ghozt-blue); margin-bottom: 0.5rem;">Certified Excellence</h3>
+                    <p style="color: #888; font-size: 0.875rem;">Multiple cybersecurity certifications</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Intake Form -->
+    <section id="intake" class="section" style="background-color: #000;">
+        <div class="container" style="max-width: 900px;">
+            <div class="section-header">
+                <div class="section-label glow-green">./SERVICE_REQUEST</div>
+                <h2 class="section-title">Deploy Your Solution</h2>
+                <p style="color: #888; font-size: 1.125rem;">Submit your service request and we'll respond within 24 hours</p>
+            </div>
+            
+            <div style="background: white; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 20px 60px rgba(0, 255, 0, 0.2); height: 800px;">
+                <iframe 
+                    src="https://docs.google.com/forms/d/e/1FAIpQLSewDTwjYiig-qBwj75JgngFv-NbxubmpWqAeT26vncrIQvF3w/viewform?embedded=true"
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0"
+                    style="border: none;">
+                    Loading GHOZTWOODS Operations Form...
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <!-- Company Info -->
+                <div class="footer-section">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                        <i data-lucide="ghost" style="width: 24px; height: 24px; color: var(--ghozt-green);"></i>
+                        <span style="font-family: var(--font-mono); font-weight: 700; font-size: 1.25rem;">GHOZTWOODS</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; max-width: 300px;">
+                        Elite MSP & Cybersecurity Solutions serving Fort Liberty and the Fayetteville ecosystem.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h3>QUICK_LINKS</h3>
+                    <ul class="footer-links">
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="technician-tracker.html">Track Technician</a></li>
+                        <li><a href="scam-detection.html">Scam Detection</a></li>
+                        <li><a href="#intake">Request Service</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="footer-section">
+                    <h3>CONTACT_HQ</h3>
+                    <ul class="footer-links">
+                        <li style="display: flex; align-items: start; gap: 0.5rem;">
+                            <i data-lucide="map-pin" style="width: 16px; height: 16px; color: var(--ghozt-green); margin-top: 2px;"></i>
+                            <span>5135 Morganton RD STE 103<br>Fayetteville, NC</span>
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="phone" style="width: 16px; height: 16px; color: var(--ghozt-green);"></i>
+                            <span>(934) 667-0073</span>
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.5rem;">
+                            <i data-lucide="mail" style="width: 16px; height: 16px; color: var(--ghozt-green);"></i>
+                            <span>AVERYAD59@GHOZTWOODS.COM</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Credentials -->
+                <div class="footer-section">
+                    <h3>CREDENTIALS</h3>
+                    <ul class="footer-links">
+                        <li>UEI: GCFHX3G9L4A6</li>
+                        <li>CAGE: 9MU60</li>
+                        <li>Status: SDVOSB</li>
+                        <li>Clearance: Active Secret</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 GHOZTWOODS LLC. ALL RIGHTS RESERVED. | POWERED BY VETERAN EXCELLENCE</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Matrix Rain Effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const alphabet = katakana + latin + nums;
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const rainDrops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff00';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 30);
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
