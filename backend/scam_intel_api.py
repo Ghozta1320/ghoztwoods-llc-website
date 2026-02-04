@@ -14,9 +14,12 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)  # Enable CORS for GitHub Pages
 
-# Hugging Face Configuration
-HF_API_URL = 'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2'
-HF_API_KEY = os.getenv('HF_API_KEY', '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')
+# Hugging Face Configuration - Using a reliable, actively maintained model
+HF_API_URL = 'https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf'
+HF_API_KEY = os.getenv('HF_API_KEY')
+
+if not HF_API_KEY:
+    raise ValueError("HF_API_KEY environment variable is required")
 
 # System prompt for IC-level analysis
 SYSTEM_PROMPT = """You are an elite intelligence analyst for GHOZTWOODS LLC, specializing in scam investigation using Intelligence Community (IC) methodologies:
