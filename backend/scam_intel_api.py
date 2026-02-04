@@ -16,7 +16,9 @@ CORS(app)  # Enable CORS for GitHub Pages
 
 # Hugging Face Configuration
 HF_API_URL = 'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2'
-HF_API_KEY = os.getenv('HF_API_KEY', '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')
+HF_API_KEY = os.getenv('HF_API_KEY')
+if not HF_API_KEY:
+    raise ValueError("HF_API_KEY environment variable not set")
 
 # System prompt for IC-level analysis
 SYSTEM_PROMPT = """You are an elite intelligence analyst for GHOZTWOODS LLC, specializing in scam investigation using Intelligence Community (IC) methodologies:
