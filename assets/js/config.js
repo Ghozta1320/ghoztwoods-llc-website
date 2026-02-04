@@ -1,10 +1,9 @@
 // GHOZTWOODS LLC - API Configuration
-// This file will be updated after Render deployment
+// Updated with live Render.com API URL
 
 const API_CONFIG = {
-    // IMPORTANT: After deploying to Render.com, replace this URL with your actual Render API URL
-    // Example: 'https://ghoztwoods-scam-intel-api.onrender.com'
-    BACKEND_API_URL: 'RENDER_API_URL_HERE',
+    // Live Render.com API URL
+    BACKEND_API_URL: 'https://ghoztwoods-llc-website.onrender.com',
     
     // Fallback to direct Hugging Face (will cause CORS errors on GitHub Pages)
     // Only works when testing locally
