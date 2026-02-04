@@ -7,7 +7,7 @@ services:
     region: oregon
     plan: free
     branch: main
-    buildCommand: "pip install -r backend/requirements.txt"
+    buildCommand: "pip install -r backend/requirements-api.txt"
     startCommand: "cd backend && gunicorn scam_intel_api:app"
     envVars:
       - key: PYTHON_VERSION

@@ -1,0 +1,8 @@
+# Minimal requirements for GHOZTWOODS Scam Intel API
+# Only what's needed for the API to run
+
+Flask==3.0.0
+Flask-CORS==4.0.0
+requests==2.31.0
+python-dotenv==1.0.0
+gunicorn==21.2.0
