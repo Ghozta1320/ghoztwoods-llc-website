@@ -17,6 +17,9 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <!-- API Configuration -->
+    <script src="assets/js/config.js"></script>
+    
     <style>
         .scanner-input {
             width: 100%;
@@ -340,29 +343,8 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Hugging Face API Configuration (FREE - Mistral-7B-Instruct)
-        const HF_API_URL = 'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2';
-        const HF_API_KEY = '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'; // GHOZTWOODS LLC Hugging Face API Key
-
-        // System prompt for IC-level scam investigation
-        const SYSTEM_PROMPT = `You are an elite intelligence analyst for GHOZTWOODS LLC, specializing in scam investigation using Intelligence Community (IC) methodologies:
-
-- GEOINT (Geospatial Intelligence): Analyze location data, IP addresses, geographic patterns
-- SOCINT (Social Media Intelligence): Investigate social media profiles, connections, behavior patterns
-- HUMINT (Human Intelligence): Analyze human behavior, psychology, social engineering tactics
-- OSINT (Open Source Intelligence): Research public records, databases, online footprints
-- SIGINT (Signals Intelligence): Analyze communication patterns, metadata, digital signatures
-
-When analyzing scams, provide:
-1. Detailed threat assessment with risk level
-2. Geographic analysis if location data available
-3. Social engineering tactics used
-4. Recommended countermeasures
-5. Evidence collection guidance
-6. Reporting procedures
-
-Be thorough, technical, and provide actionable intelligence. Use IC terminology and methodologies.`;
-
+        // API Configuration - Uses secure backend on Render.com
+        // API key is stored securely in Render environment variables
         let conversationHistory = [];
 
         // Navbar scroll effect
@@ -402,38 +384,38 @@ Be thorough, technical, and provide actionable intelligence. Use IC terminology 
             }
         }
 
-        // Query Hugging Face AI
+        // Query AI through secure backend API
         async function queryAI(userMessage) {
-            // Build conversation context
             conversationHistory.push({ role: 'user', content: userMessage });
             
-            const prompt = `${SYSTEM_PROMPT}\n\nUser: ${userMessage}\n\nAssistant:`;
-            
             try {
-                const response = await fetch(HF_API_URL, {
+                // Check if backend API URL is configured
+                if (!API_CONFIG.BACKEND_API_URL || API_CONFIG.BACKEND_API_URL === 'RENDER_API_URL_HERE') {
+                    throw new Error('Backend API not configured. Please deploy to Render.com first. See RENDER_DEPLOYMENT_GUIDE.md');
+                }
+
+                const response = await fetch(`${API_CONFIG.BACKEND_API_URL}${API_CONFIG.ANALYZE_ENDPOINT}`, {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${HF_API_KEY}`,
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        inputs: prompt,
-                        parameters: {
-                            max_new_tokens: 500,
-                            temperature: 0.7,
-                            top_p: 0.95,
-                            return_full_text: false
-                        }
+                        message: userMessage
                     })
                 });
 
                 if (!response.ok) {
-                    throw new Error('API request failed. Please ensure you have a valid Hugging Face API key.');
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error || `API request failed with status ${response.status}`);
                 }
 
                 const data = await response.json();
-                const aiResponse = data[0]?.generated_text || 'Unable to generate response. Please try again.';
                 
+                if (!data.success) {
+                    throw new Error(data.error || 'Analysis failed');
+                }
+                
+                const aiResponse = data.response || 'Unable to generate response. Please try again.';
                 conversationHistory.push({ role: 'assistant', content: aiResponse });
                 
                 return aiResponse;

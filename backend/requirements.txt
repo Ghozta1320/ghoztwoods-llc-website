@@ -50,3 +50,6 @@ flake8==6.1.0
 
 # Documentation
 # Sphinx==7.2.6
+
+# Production Server
+gunicorn==21.2.0
